@@ -28,7 +28,7 @@ class Database
  
             return $result;
         } catch(Exception $e) {
-            throw New Exception( $e->getMessage() );
+            return false;
         }
         return false;
     }
@@ -51,7 +51,8 @@ class Database
             return $result;
 
         } catch(Exception $e) {
-            throw New Exception( $e->getMessage() );
+            return false;
+           
         }   
     }
  
@@ -73,7 +74,7 @@ class Database
         return $stmt;
 
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            return false;
         }
     }
 }

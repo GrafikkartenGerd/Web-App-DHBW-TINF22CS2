@@ -35,7 +35,7 @@ class AuthController extends BaseController
     public function register($username, $password, $name, $surname, $birthday, $gender, $matriculation_number, $faculty, $degree, $course){
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $authToken = bin2hex(random_bytes(32));
+        $authToken = bin2hex(random_bytes(16));
 
         return $this->db->exec("INSERT INTO users (username, name, surname, password, birthday, gender, matriculation_number, faculty, degree, course, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);" , "ssssssissss", [$username, $name, $surname, $hashedPassword, $birthday->format("Y-m-d"), $gender, $matriculation_number, $faculty, $degree, $course, $authToken]);
     }
