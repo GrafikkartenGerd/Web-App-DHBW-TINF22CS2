@@ -48,5 +48,5 @@ if ($birthday === false) {
 $controller = new AuthController();
 $result = $controller->register($username, $password, $name, $surname, $birthday, $gender, $matriculation_number, $faculty, $degree, $course);
 
-echo (json_encode(['sucess' => $result]));
+echo (json_encode(['success' => $result]));
 ?>
