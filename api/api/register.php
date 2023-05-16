@@ -1,12 +1,13 @@
 <?php
 
+include "util.php";
 include "AuthController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 # check if the request is valid and has all parameters
 if (strtoupper($requestMethod) !== 'POST') {
-    $this->fail(405);
+    failWithCode(405);
 }
 
 $username = $_POST['username'] ?? null;
@@ -33,16 +34,16 @@ if (
     $degree === null ||
     $course === null
 ) {
-    $this->fail(400);
+    failWithCode(400);
 }
 
 if (!in_array($gender, ['m', 'f', 'o'])) {
-    $this->fail(400);
+    failWithCode(400);
 }
 
 $birthday = date_create_from_format("Y-m-d", $birthday);
 if ($birthday === false) {
-    $this->fail(400);
+    failWithCode(400);
 }
 
 $controller = new AuthController();

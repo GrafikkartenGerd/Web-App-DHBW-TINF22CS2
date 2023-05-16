@@ -1,12 +1,13 @@
 <?php
 
+include "util.php";
 include "AuthController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
         
 # check if the request is valid and has all parameters
-if (strtoupper($requestMethod) !== 'POST') $this->fail(405);
-if (!isset($_POST["username"]) || !isset($_POST["password"])) $this->fail(400);
+if (strtoupper($requestMethod) !== 'POST') failWithCode(405);
+if (!isset($_POST["username"]) || !isset($_POST["password"])) failWithCode(400);
         
 $username = $_POST["username"];
 $password = $_POST["password"];
