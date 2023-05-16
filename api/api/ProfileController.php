@@ -24,7 +24,7 @@ class ProfileController extends BaseController
         if(count($result) == 0)
             return ['status' => false];
             
-        return ['status' => true, 'data' => result[0]];
+        return ['status' => true, 'data' => $result[0]];
     }
 }
 
