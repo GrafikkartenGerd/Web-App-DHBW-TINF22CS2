@@ -34,7 +34,8 @@ class AuthController extends BaseController
 
     public function register($username, $password, $name, $surname, $birthday, $gender, $matriculation_number, $faculty, $degree, $course){
 
-        
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $authToken = OAuthProvider::generateToken(32);
 
     }
 }

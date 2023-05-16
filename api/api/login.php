@@ -18,5 +18,7 @@ if ($result != "") {
     
     # return the auth token
     echo(json_encode([ 'token' => $result]));
+}else{
+    $this->fail(401);
 }
 ?>
