@@ -22,10 +22,10 @@ class AuthController extends BaseController
         $result = $this->db->select("SELECT password, token from users WHERE username=?", "s", [$username])->fetch_all(MYSQLI_ASSOC);
 
         if(count($result) == 0)
-            $this->fail(403);
+            $this->fail(401);
 
         $hashedPassword = $result[0]["password"];
-        if(!password_verify($password, $hashedPassword)) return "";
+        if(!password_verify($password, $hashedPassword)) $this->fail(401);
 
         return $result[0]["token"];
         
