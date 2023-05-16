@@ -46,10 +46,7 @@ if ($birthday === false) {
 }
 
 $controller = new AuthController();
-$result = $controller->login($username, $password);
-if ($result != "") {
-    http_response_code(200);
+$result = $controller->register($username, $password, $name, $surname, $birthday, $gender, $matriculation_number, $faculty, $degree, $course);
 
-    # return the auth token
-    echo (json_encode(['token' => $result]));
-}
+echo (json_encode(['sucess' => $result]));
+?>
