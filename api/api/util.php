@@ -6,12 +6,20 @@
     }
 
     function getAuthToken(){
-        $headers = apache_request_headers();
+       $headers = apache_request_headers();
 
         if (isset($headers['Authorization'])) {
-            return $headers['Authorization'];
-        }else{
+            $authorizationHeader = $headers['Authorization'];
+            $token = null;
+
+                // Check if the header starts with 'Bearer'
+                if (preg_match('/Bearer\s+(.*)$/i', $authorizationHeader, $matches)) {
+                    $token = $matches[1];
+                }
+
+                return $token;
+            }
+
             failWithCode(401);
-        }
     }
 ?>

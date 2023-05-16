@@ -19,7 +19,7 @@ class ProfileController extends BaseController
 
     public function getProfile($authToken)
     {
-        $result = $this->db->select("SELECT username, name, surname, birthday, gender, faculty, degree, course FROM users WHERE token=?;", "s", [$authToken]);
+        $result = $this->db->select("SELECT username, name, surname, birthday, gender, faculty, degree, course FROM users WHERE token=?;", "s", [$authToken])->fetch_all(MYSQLI_ASSOC);
 
         if(count($result) == 0)
             return ['status' => false];
