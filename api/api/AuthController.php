@@ -32,7 +32,7 @@ class AuthController extends BaseController
         return $uid;
     }
 
-    public function register($username, $password){
+    public function register($username, $password, $name, $surname, $birthday, $gender, $matriculation_number, $faculty, $degree, $course){
 
         
 
