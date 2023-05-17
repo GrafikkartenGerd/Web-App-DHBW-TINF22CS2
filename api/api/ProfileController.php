@@ -1,7 +1,7 @@
 <?php
 
-include "BaseController.php";
-include "../Database.php";
+require_once "BaseController.php";
+require_once "../Database.php";
 
 class ProfileController extends BaseController
 {
@@ -19,12 +19,17 @@ class ProfileController extends BaseController
 
     public function getProfile($authToken)
     {
-        $result = $this->db->select("SELECT username, name, surname, birthday, gender, faculty, degree, course FROM users WHERE token=?;", "s", [$authToken])->fetch_all(MYSQLI_ASSOC);
+        $result = $this->db->select("SELECT username, name, surname, birthday, gender, faculty, degree, course FROM users WHERE token=?;", "s", [$authToken]);
+
+        if($result == false)
+            return null;
+            
+        $result = $result->fetch_all(MYSQLI_ASSOC);
 
         if(count($result) == 0)
-            return ['status' => false];
+            return null;
             
-        return ['status' => true, 'data' => $result[0]];
+        return $result[0];
     }
 }
 

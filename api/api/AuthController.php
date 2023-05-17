@@ -1,7 +1,7 @@
 <?php
 
-include "BaseController.php";
-include "../Database.php";
+require_once "BaseController.php";
+require_once "../Database.php";
 
 class AuthController extends BaseController
 {
@@ -19,7 +19,13 @@ class AuthController extends BaseController
 
     public function login($username, $password)
     {
-        $result = $this->db->select("SELECT password, token from users WHERE username=?", "s", [$username])->fetch_all(MYSQLI_ASSOC);
+        $result = $this->db->select("SELECT password, token from users WHERE username=?", "s", [$username]);
+
+        if($result == false)
+            return null;
+
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+
 
         if(count($result) == 0)
             $this->fail(401);
@@ -33,6 +39,16 @@ class AuthController extends BaseController
     }
 
     public function register($username, $password, $name, $surname, $birthday, $gender, $matriculation_number, $faculty, $degree, $course){
+
+        $result = $this->db->select("SELECT password, token from users WHERE username=?", "s", [$username]);
+
+        if($result == false)
+            return null;
+
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+
+        if(count($result) != 0)
+            return "Username unavailable";
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $authToken = bin2hex(random_bytes(32));

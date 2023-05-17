@@ -14,6 +14,11 @@ $authToken = getAuthToken();
 $controller = new ProfileController();
 $result = $controller->getProfile($authToken);
 
-http_response_code(200);
-echo(json_encode($result));
+if($result == null)
+    echo (json_encode(["status" => false]));
 
+http_response_code(200);
+echo (json_encode(["status" => true, "data" => $result]));
+
+
+?>

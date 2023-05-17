@@ -1,6 +1,6 @@
 <?php
 
-include "config.php";
+include_once "config.php";
 
 class Database
 {
@@ -25,7 +25,7 @@ class Database
             $stmt = $this->executeStatement( $query, $type, $params );
             $result = $stmt->get_result();          
             $stmt->close();
- 
+
             return $result;
         } catch(Exception $e) {
             return false;
@@ -74,7 +74,7 @@ class Database
         return $stmt;
 
         } catch (Exception $e) {
-            return false;
+            throw new Exception($e->getMessage());
         }
     }
 }
