@@ -1,7 +1,7 @@
 <?php
 
 include "util.php";
-include "ProfileController.php";
+include "UserController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
@@ -11,7 +11,7 @@ if (strtoupper($requestMethod) !== 'POST') {
 }
 
 $authToken = getAuthToken();
-$controller = new ProfileController();
+$controller = new UserController();
 $result = $controller->getProfile($authToken);
 
 if($result == null)

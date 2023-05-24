@@ -1,7 +1,7 @@
 <?php
 
 include "util.php";
-include "ProfileController.php";
+include "UserController.php";
 include "EventController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
@@ -26,8 +26,8 @@ if (!in_array($filterLevel, ['faculty', 'degree', 'course', 'all'])) {
 
 $authToken = getAuthToken();
 
-$profileController = new ProfileController();
-$profileResult = $profileController->getProfile($authToken);
+$profileController = new UserController();
+$profileResult = $profileController->getUserByUsername($authToken);
 
 if($profileResult == null)
     failWithCode(401);

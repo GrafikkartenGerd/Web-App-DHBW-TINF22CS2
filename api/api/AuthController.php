@@ -34,8 +34,6 @@ class AuthController extends BaseController
         if(!password_verify($password, $hashedPassword)) $this->fail(401);
 
         return $result[0]["token"];
-        
-        return $uid;
     }
 
     public function register($username, $password, $name, $surname, $birthday, $gender, $matriculation_number, $faculty, $degree, $course){

@@ -25,9 +25,10 @@ class Database
             $stmt = $this->executeStatement( $query, $type, $params );
             $result = $stmt->get_result();          
             $stmt->close();
-
+            
             return $result;
         } catch(Exception $e) {
+            
             return false;
         }
         return false;
