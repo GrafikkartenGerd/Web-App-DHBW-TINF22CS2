@@ -5,6 +5,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title> Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+
 
     <script>
         tailwind.config = {
