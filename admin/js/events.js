@@ -22,7 +22,7 @@ function refreshEventList(){
                 .addClass('btn btn-danger')
                 .text('Delete')
                 .click(function() {
-                deleteEvent(user.username);
+                deleteEvent(event.id);
                 });
 
             actionsCell.append(deleteBtn);
@@ -32,26 +32,16 @@ function refreshEventList(){
 }
 
 function deleteEvent(id) {
-    // Send AJAX request to PHP backend to delete the user
     $.get('backend.php', { action: 'deleteEvent', eventId: id }, function(response) {
-      // Check if the request was successful
       if (response.success) {
-        // Refresh the user table after successful deletion
+        showAlert("Event deleted!", "success");
         refreshEventList();
       } else {
-        // Display an error message or handle the error case as needed
+        showAlert("Could not delete event: " + response.reason, "danger");
       }
     });
   }
 
 $(document).ready(function () {
-    // Fetch user count from PHP backend
-    $.get("backend.php", { action: "statistics" }, function (response) {
-      var userCount = response.userCount;
-      var eventCount = response.eventsCount;
-      $("#userCount").text(userCount);
-      $("#eventCount").text(eventCount);
-    });
-
     refreshEventList();
   });

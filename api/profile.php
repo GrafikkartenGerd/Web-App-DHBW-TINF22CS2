@@ -12,7 +12,7 @@ if (strtoupper($requestMethod) !== 'POST') {
 
 $authToken = getAuthToken();
 $controller = new UserController();
-$result = $controller->getProfile($authToken);
+$result = $controller->getUserByUsername($authToken);
 
 if($result == null)
     echo (json_encode(["status" => false]));

@@ -1,4 +1,6 @@
 <?php
+  require_once "../api/UserController.php";
+  require_once "../api/EventController.php";
   # todo auth check
 ?>
 
@@ -34,12 +36,19 @@
 </nav>
 
   <div class="container mt-4">
+   <div id="alertContainer"></div>
     <div class="row">
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">User Count</h5>
-            <p class="card-text">Total number of users: <span id="userCount"></span></p>
+            <p class="card-text">Total number of users: <span id="userCount">
+              <?php
+                 $controller = new UserController();
+                 $userCount = $controller->getUserCount();
+                 echo($userCount);
+              ?>
+            </span></p>
           </div>
         </div>
       </div>
@@ -47,7 +56,13 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Current Events</h5>
-            <p class="card-text">Current Number of events: <span id="eventCount"></span></p>
+            <p class="card-text">Number of current events: <span id="eventCount">
+            <?php
+                 $controller = new EventController();
+                 $userCount = $controller->getEventCount();
+                 echo($userCount);
+              ?>
+            </span></p>
           </div>
         </div>
       </div>
@@ -61,7 +76,7 @@
       <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Search events" id="searchEventInput">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="searchEventsButton">Search</button>
+          <button class="btn btn-outline-secondary" type="submit" id="searchEventsButton">Search</button>
         </div>
       </div>
       <table class="table">
@@ -82,6 +97,7 @@
 </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script src="js/util.js"></script>
   <script src="js/events.js"></script>
 </body>
 </html>
