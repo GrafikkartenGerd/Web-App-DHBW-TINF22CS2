@@ -99,16 +99,21 @@
   }
 
   .swipeable-card.swipe-left {
-    transform: translateX(-100%);
+    transform: translateX(-100%) rotate(-15deg);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
   }
 
   .swipeable-card.swipe-right {
-    transform: translateX(100%);
+    transform: translateX(100%) rotate(15deg);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
   }
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.10/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/confetti-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
   // Add swipe functionality to the event card
   var eventCard = document.getElementById('eventCard');
@@ -138,11 +143,19 @@
 
     if (deltaX < -threshold) {
       eventCard.classList.add('swipe-left');
+      removeCardAfterTransition();
     } else if (deltaX > threshold) {
       eventCard.classList.add('swipe-right');
       showConfettiAndPlaySound();
+      removeCardAfterTransition();
     }
   });
+
+  function removeCardAfterTransition() {
+    eventCard.addEventListener('transitionend', function() {
+      eventCard.remove();
+    });
+  }
 
   function showConfettiAndPlaySound() {
     // Show confetti explosion animation
@@ -166,6 +179,7 @@
     });
   }
 </script>
+
 
 
 </body>
