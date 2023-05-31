@@ -25,7 +25,8 @@
         }
       </style>
 </head>
-<nav id="header_bar">
+<body style="width: 100%; overflow: scroll;">
+    <nav id="header_bar">
             <table id="nav_table">
                 <tr><td id="logo_td"><a href="https://dhbw-mannheim.de"><img src="logo.png" id="logo"></a>
                 </td>
@@ -40,7 +41,6 @@
                 
             </table> 
         </nav>
-<body style="width: 100%; overflow: scroll;">
     <form style="width: 50%; left: 25%; position: relative;">
         <div class="space-y-12">
           <div class="border-b border-gray-900/10 pb-12">
