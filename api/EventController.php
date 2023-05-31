@@ -28,6 +28,25 @@ class EventController extends BaseController
         return count($result);
     }
 
+    public function deleteEvent($eid){
+        $result = $this->db->exec("DELETE from events WHERE id=?", "i", [$eid]);
+        return $result;   
+    }
+
+    public function getEventById($eid){
+        $result = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv FROM events WHERE id=?;", "i", [$eid]);
+
+        if($result == false)
+            return null;
+            
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+
+        if(count($result) == 0)
+            return null;
+            
+        return $result[0];
+    }
+
     public function getEventsforUser($user, $filter_level)
     {
         if($filter_level != "all"){
@@ -41,10 +60,7 @@ class EventController extends BaseController
             return null;
 
         $events = $events->fetch_all(MYSQLI_ASSOC);
-
-        if (count($events) == 0) 
-            return null;
-
+        
         return $events;
     }
 

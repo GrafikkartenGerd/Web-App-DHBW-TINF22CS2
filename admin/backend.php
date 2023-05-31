@@ -24,7 +24,7 @@ if ($action === 'searchUsers') {
 // Handle the delete user action
 if ($action === 'deleteUser') {
   $username = $_GET['username'];
-
+  if(!isset($username)) failWithCode(405);
   $controller = new UserController();
   $user = $controller->getUserByUsername($username);
   if($user == null){
@@ -35,6 +35,23 @@ if ($action === 'deleteUser') {
   $result = $controller->deleteUser($user["id"]);
   echo json_encode(['success' => $result]);
   
+  exit;
+}
+
+// Handle the delete event action
+if ($action === 'deleteEvent') {
+  $eid = $_GET['eventId'];
+  if(!isset($eid)) failWithCode(405);
+
+  $controller = new EventController();
+  $event = $controller->getEventById($eid);
+  if($event == null){
+    echo json_encode(['success' => false, 'reason' => "Event not found!"]);
+    exit;
+  }
+
+  $result = $controller->deleteEvent($event["id"]);
+  echo json_encode(['success' => $result]);
   exit;
 }
 
@@ -57,17 +74,6 @@ if ($action === 'resetPassword') {
   exit;
 }
 
-if ($action === 'statistics') {
-    $controller = new UserController();
-    $userCount = $controller->getUserCount();
-    $controller = new EventController();
-    $eventsCount = $controller->getEventCount();
-    
-    echo json_encode(['eventsCount' => $eventsCount, 'userCount' => $userCount]);
-
-    exit;
-}
-
 if ($action === 'getEventList') {
 
     $controller = new EventController();
@@ -83,7 +89,7 @@ if ($action === 'getEventList') {
             $event['host'] = $user["username"];
       }
 
-    if($events == null)
+    if($events === null)
         echo json_encode(['status' => false]);
     else
         echo json_encode(['status' => true, 'events' => $events]);

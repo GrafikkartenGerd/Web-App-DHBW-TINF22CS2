@@ -1,9 +1,9 @@
  // Function to populate the user table
  function populateUserTable(users) {
     var userTableBody = $('#userTableBody');
-    userTableBody.empty(); // Clear previous table content
+    userTableBody.empty();
 
-    // Loop through the users array and create table rows
+    
     users.forEach(function(user) {
       var row = $('<tr>');
       var usernameCell = $('<td>').text(user.username);
@@ -11,7 +11,7 @@
       var courseCell = $('<td>').text(user.course);
       var actionsCell = $('<td>');
 
-      // Create delete button
+      // delete user
       var deleteBtn = $('<button>')
         .addClass('btn btn-danger')
         .text('Delete')
@@ -19,7 +19,7 @@
           deleteUser(user.username);
         });
 
-      // Create reset password button
+      // reset password btn
       var resetPasswordBtn = $('<button>')
         .addClass('btn btn-warning')
         .text('Reset Password')
@@ -27,7 +27,14 @@
           resetPassword(user.username);
         });
 
-      actionsCell.append(deleteBtn, resetPasswordBtn);
+        var exportUserBtn = $('<button>')
+        .addClass('btn btn-info')
+        .text('Export')
+        .click(function() {
+          exportUser(user.username);
+        });
+
+      actionsCell.append(deleteBtn, resetPasswordBtn, exportUserBtn);
       row.append(usernameCell, nameCell, courseCell, actionsCell);
       userTableBody.append(row);
     });
@@ -44,49 +51,39 @@
         var users = response.users;
         populateUserTable(users); // Populate the user table with the search results
       } else {
-        // Display an error message or handle the error case as needed
+        showAlert("Couldn't find user!", "danger");
       }
     });
   }
 
   // Function to delete a user
   function deleteUser(username) {
-    // Send AJAX request to PHP backend to delete the user
     $.get('backend.php', { action: 'deleteUser', username: username }, function(response) {
-      // Check if the request was successful
       if (response.success) {
-        // Refresh the user table after successful deletion
+        
         searchUsers();
       } else {
-        // Display an error message or handle the error case as needed
+        showAlert("Couldn't delete user: " + response.reason, "danger");
       }
     });
   }
 
   // Function to reset a user's password
   function resetPassword(username) {
-    // Send AJAX request to PHP backend to reset the user's password
     $.get('backend.php', { action: 'resetPassword', username: username }, function(response) {
-      // Check if the request was successful
+    
       if (response.success) {
-        alert("New password: " + response.password);
+        showAlert("Password set to " + response.password, "success");
       } else {
-        alert("Could not set password: " + response.reason);
+        showAlert("Could not set password: " + response.reason, "danger");
       }
     });
   }
 
-  // Search users when the Search button is clicked
+  function exportUser(username){
+    window.open("exportUser.php?username=" + username);
+  }
+
   $('#searchUserBtn').click(function() {
     searchUsers();
-  });
-
-  $(document).ready(function () {
-    // Fetch user count from PHP backend
-    $.get("backend.php", { action: "statistics" }, function (response) {
-      var userCount = response.userCount;
-      var eventCount = response.eventsCount;
-      $("#userCount").text(userCount);
-      $("#eventCount").text(eventCount);
-    });
   });

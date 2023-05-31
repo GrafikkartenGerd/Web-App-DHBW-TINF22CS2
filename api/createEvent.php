@@ -1,7 +1,7 @@
 <?php
 
 include "util.php";
-include "ProfileController.php";
+include "UserController.php";
 include "EventController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
@@ -36,8 +36,8 @@ if (
 
 $authToken = getAuthToken();
 
-$profileController = new ProfileController();
-$profileResult = $profileController->getProfile($authToken);
+$profileController = new UserController();
+$profileResult = $profileController->getUserByUsername("johndoe");
 
 if($profileResult == null)
     failWithCode(401);
