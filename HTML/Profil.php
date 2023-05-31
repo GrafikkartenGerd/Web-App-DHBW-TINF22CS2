@@ -25,6 +25,21 @@
         }
       </style>
 </head>
+<nav id="header_bar">
+            <table id="nav_table">
+                <tr><td id="logo_td"><a href="https://dhbw-mannheim.de"><img src="logo.png" id="logo"></a>
+                </td>
+                <td id="button_td">
+                    <button id="nav_button" disabled>Start</button>
+                    <a href="Swipe.html"><button id="nav_button">Swiper Diper</button></a>
+                    <a href="upcomingevents.html"><button id="nav_button">Upcomming Events</button></a>
+                    <button id="nav_button">Announcments</button>
+                </td>
+                <td id="img"><img src="einstellung.png" id="Einstellung" onclick="sidebarslide()"></td>
+                </tr>
+                
+            </table> 
+        </nav>
 <body style="width: 100%; overflow: scroll;">
     <form style="width: 50%; left: 25%; position: relative;">
         <div class="space-y-12">
