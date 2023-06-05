@@ -1,0 +1,69 @@
+ .swipeable-card {
+     position: relative;
+     cursor: grab;
+     transition: transform 0.3s;
+ }
+
+ .swipeable-card.swipe-left {
+     transform: translateX(-100%) rotate(-15deg);
+     opacity: 0;
+     transition: transform 0.3s, opacity 0.3s;
+ }
+
+ .swipeable-card.swipe-right {
+     transform: translateX(100%) rotate(15deg);
+     opacity: 0;
+     transition: transform 0.3s, opacity 0.3s;
+ }
+
+ #confetti-canvas {
+     position: fixed;
+     top: 0;
+     left: 0;
+     pointer-events: none;
+     /* Ensure the canvas doesn't interfere with other elements */
+     z-index: 9998;
+     /* Place the canvas below the popup */
+ }
+
+ .overlay {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.7);
+     /* Adjust the opacity to control the darkness */
+     z-index: 9997;
+     /* Place the overlay below the popup */
+ }
+
+ .confirmation-popup {
+     position: fixed;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     z-index: 9999;
+     /* Ensure the popup is on top of other elements */
+     background-color: #fff;
+     padding: 10px 20px;
+     font-size: 20px;
+     border-radius: 5px;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+ }
+
+ .card-particle {
+     position: absolute;
+     background-color: #000;
+     width: 10px;
+     height: 10px;
+     border-radius: 50%;
+     animation-fill-mode: forwards;
+ }
+
+ @keyframes explode {
+     to {
+         opacity: 0;
+         transform: translate3d(calc(50% - 5px), calc(50% - 5px), 0) scale(0.2);
+     }
+ }

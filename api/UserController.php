@@ -30,9 +30,13 @@ class UserController extends BaseController
         return $result;
     }
 
-    public function getUserById($uid){
+    public function getUserById($uid, $minimal = false){
 
-        $result = $this->db->select("SELECT id, username, name, surname, birthday, gender, faculty, degree, course FROM users WHERE id=?;", "i", [$uid]);
+        $cmd = "SELECT id, username, name, surname, birthday, gender, faculty, degree, course, profile_picture FROM users WHERE id=?;";
+        if($minimal)
+            $cmd = "SELECT id, username, name, surname, profile_picture FROM users WHERE id=?;";
+
+        $result = $this->db->select($cmd, "i", [$uid]);
 
         if($result == false)
             return null;
