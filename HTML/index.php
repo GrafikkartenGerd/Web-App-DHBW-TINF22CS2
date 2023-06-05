@@ -70,6 +70,13 @@
   });
 </script>
 
+<div id="alertContainer"></div>
+<div class="container mt-4">
+  <div class="card" id="eventCard" style="display: none;">
+    <!-- Card content goes here -->
+  </div>
+</div>
+
 <div class="container mt-4">
   <div class="card" id="eventCard">
     <div class="card-body">
@@ -90,6 +97,8 @@
     </div>
   </div>
 </div>
+
+<canvas id="confetti-canvas"></canvas>
 
 <style>
   .swipeable-card {
@@ -114,8 +123,103 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/confetti-js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<style>
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Ensure the canvas doesn't interfere with other elements */
+  z-index: 9998; /* Place the canvas below the popup */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Adjust the opacity to control the darkness */
+  z-index: 9997; /* Place the overlay below the popup */
+}
+
+.confirmation-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; /* Ensure the popup is on top of other elements */
+  background-color: #fff;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card-particle {
+  position: absolute;
+  background-color: #000;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation-fill-mode: forwards;
+}
+
+@keyframes explode {
+  to {
+    opacity: 0;
+    transform: translate3d(calc(50% - 5px), calc(50% - 5px), 0) scale(0.2);
+  }
+}
+</style>
+
 <script>
-  // Add swipe functionality to the event card
+function fetchNextEvent() {
+  // Perform AJAX request to fetch event card data
+  // Replace the URL with the actual endpoint to fetch the data
+  $.ajax({
+    url: 'fetchEvent.php',
+    method: 'GET',
+    success: function(data) {
+      
+      populateEventCard(data);
+    },
+    error: function() {
+      console.log('Failed to fetch event card data');
+    }
+  });
+}
+
+// Function to populate the event card with data
+function populateEventCard(data) {
+  var eventCard = document.getElementById('eventCard');
+
+  // Update the card content with the retrieved data
+  eventCard.innerHTML = `
+    <div class="card-body">
+      <h5 class="card-title">${data.eventName}</h5>
+      <p class="card-text">${data.description}</p>
+      <div class="d-flex align-items-center">
+        <img src="${data.profilePicture}" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
+        <p class="mb-0 ml-2">${data.creator}</p>
+      </div>
+      <div class="d-flex align-items-center mt-2">
+        <i class="far fa-calendar-alt"></i>
+        <p class="mb-0 ml-2">${data.dateAndTime}</p>
+      </div>
+      <div class="d-flex align-items-center">
+        <i class="fas fa-map-marker-alt"></i>
+        <p class="mb-0 ml-2">${data.location}</p>
+      </div>
+    </div>
+  `;
+
+  // Show the event card
+  eventCard.style.display = 'block';
+}
+</script>
+
+<script>
   var eventCard = document.getElementById('eventCard');
   var mc = new Hammer(eventCard);
 
@@ -143,43 +247,55 @@
 
     if (deltaX < -threshold) {
       eventCard.classList.add('swipe-left');
-      removeCardAfterTransition();
+      explodeCard();
+
     } else if (deltaX > threshold) {
       eventCard.classList.add('swipe-right');
-      showConfettiAndPlaySound();
-      removeCardAfterTransition();
+      showConfirmation();
+      eventCard.remove();  
     }
   });
 
-  function removeCardAfterTransition() {
-    eventCard.addEventListener('transitionend', function() {
-      eventCard.remove();
-    });
+  function explodeCard() {
+    $(eventCard).hide( "explode", {pieces: 5 }, 200);
   }
 
-  function showConfettiAndPlaySound() {
-    // Show confetti explosion animation
-    Swal.fire({
-      title: 'Swiped Right!',
-      html: '<div id="confetti-container"></div>',
-      showConfirmButton: false,
-      background: 'transparent',
-      allowOutsideClick: false,
-      onOpen: () => {
-        var confettiContainer = document.getElementById('confetti-container');
-        var confettiSettings = { target: confettiContainer, max: 200 };
-        var confetti = new ConfettiGenerator(confettiSettings);
-        confetti.render();
-      },
-      onClose: () => {
-        // Play calming chime sound
-        var audio = new Audio('calming_chime_sound.mp3');
-        audio.play();
-      }
-    });
+  function showConfirmation() {
+      // Play chime sound
+  var audio = new Audio('chime.mp3');
+  audio.play();
+  // 
+  var confirmationContainer = $('<div>Liked event!</div>')
+    .addClass('confirmation-popup')
+    .appendTo('body');
+
+     // this will make the background darker temporarly
+  var overlay = $('<div></div>')
+    .addClass('overlay')
+    .appendTo('body');
+
+  // Show confetti
+  var confettiSettings = {
+    target: 'confetti-canvas',
+    max: 100,
+    size: 1,
+    animate: true
+  };
+  var confetti = new ConfettiGenerator(confettiSettings);
+  confetti.render();
+
+   // add bounce
+  confirmationContainer.effect('bounce', { times: 2, distance: 100 }, 750, function() {
+    confirmationContainer.remove();
+    confetti.clear();
+    overlay.remove();
+  });
   }
 </script>
 
+<script>
+
+</script>
 
 
 </body>
