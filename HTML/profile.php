@@ -131,6 +131,73 @@
   </style>
 </head>
 <body>
+style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
+    Campus Connect
+  </a>
+  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Announcements</a>
+      </li>
+    </ul>
+  </div>
+  <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
+    <a class="nav-link" href="#">
+      <img src="profile_picture.jpg" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
+    </a>
+  </div>
+</nav>
+
+<style>
+  @media (max-width: 991.98px) {
+    .navbar-toggler {
+      margin-left: auto !important;
+      margin-right: 0.5rem !important;
+    }
+    .navbar-nav.ml-auto:not(.collapse) {
+      display: flex !important;
+    }
+    .navbar:not(.navbar-expand-lg) {
+      padding-right: 1rem;
+    }
+    .navbar-collapse {
+      padding-left: 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelector('.navbar-toggler').addEventListener('click', function() {
+    document.querySelector('.navbar-collapse').classList.toggle('show');
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <header class="header">
   <div class="container">
