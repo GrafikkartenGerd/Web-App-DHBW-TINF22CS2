@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="index.php">
     <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
     <span class="header">CampusConnect</span>
   </a>
