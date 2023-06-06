@@ -1,7 +1,7 @@
 <?php
+  require "auth.php";
   require_once "../api/UserController.php";
   require_once "../api/EventController.php";
-  # todo auth check
 ?>
 
 <!DOCTYPE html>

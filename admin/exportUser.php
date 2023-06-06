@@ -1,6 +1,6 @@
 <?php
 
-//require_once "auth.php";
+require_once "auth.php";
 
 if(!isset($_GET["username"])){
     http_response_code(405);

@@ -1,9 +1,14 @@
+<?php
+
+include "auth.php"
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Campus Connect</title>
+  <title>CampusConnect</title>
   <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -17,15 +22,32 @@
     }
 
     .navbar-icon {
-  width: 55px; 
-}
+  width: 55px;
+    } 
+
+   .header {
+        padding: 0px;
+        text-align: left;
+    }
+
+    .header img {
+        height: 60px;
+        width: 60px;
+        margin-right: 10px;
+    }
+
+    .header span {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">
     <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
-    Campus Connect
+    <span class="header">CampusConnect</span>
   </a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -36,13 +58,19 @@
         <a class="nav-link" href="#">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Announcements</a>
+        <a class="nav-link" href="logout.php">Announcements</a>
       </li>
+      <?php
+        if($_SESSION["is_admin"])
+          echo '<li class="nav-item">
+                  <a class="nav-link" href="../admin/users.php">Admin Panel</a>
+                </li>'
+      ?>
     </ul>
   </div>
   <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
     <a class="nav-link" href="#">
-      <img src="profile_picture.jpg" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
+      <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
     </a>
   </div>
 </nav>
@@ -71,8 +99,8 @@
   });
 </script>
 
-<div id="alertContainer"></div>
 <div class="container mt-4">
+  <div id="alertContainer"></div>
   <div class="card" id="eventCard" style="display: none;">
   </div>
 </div>
