@@ -15,89 +15,18 @@ include "auth.php"
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="swipe.css">
+  <link rel="stylesheet" href="header.css">
   <!-- Include custom CSS -->
   <style>
     .card {
       margin-bottom: 20px;
     }
-
-    .navbar-icon {
-  width: 55px;
-    } 
-
-   .header {
-        padding: 0px;
-        text-align: left;
-    }
-
-    .header img {
-        height: 60px;
-        width: 60px;
-        margin-right: 10px;
-    }
-
-    .header span {
-        font-size: 30px;
-        font-weight: bold;
-    }
-
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
-    <span class="header">CampusConnect</span>
-  </a>
-  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="logout.php">Announcements</a>
-      </li>
-      <?php
-        if($_SESSION["is_admin"])
-          echo '<li class="nav-item">
-                  <a class="nav-link" href="../admin/users.php">Admin Panel</a>
-                </li>'
-      ?>
-    </ul>
-  </div>
-  <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
-    <a class="nav-link" href="#">
-      <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
-    </a>
-  </div>
-</nav>
-
-<style>
-  @media (max-width: 991.98px) {
-    .navbar-toggler {
-      margin-left: auto !important;
-      margin-right: 0.5rem !important;
-    }
-    .navbar-nav.ml-auto:not(.collapse) {
-      display: flex !important;
-    }
-    .navbar:not(.navbar-expand-lg) {
-      padding-right: 1rem;
-    }
-    .navbar-collapse {
-      padding-left: 1rem;
-    }
-  }
-</style>
-
-<script>
-  document.querySelector('.navbar-toggler').addEventListener('click', function() {
-    document.querySelector('.navbar-collapse').classList.toggle('show');
-  });
-</script>
+<?php
+  include("header.php");
+?>
 
 <div class="container mt-4">
   <div id="alertContainer"></div>
@@ -160,11 +89,6 @@ function populateEventCard(data) {
 <script>
   fetchNextEvent();
 </script>
-
-<script>
-
-</script>
-
 
 </body>
 </html>

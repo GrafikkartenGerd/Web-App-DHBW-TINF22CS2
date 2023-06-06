@@ -1,3 +1,8 @@
+<?php
+
+include "auth.php"
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,42 +11,20 @@
   <title>Event Management System</title>
   <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <!-- Include custom CSS -->
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     .card {
       margin-bottom: 20px;
     }
-
-    .navbar-icon {
-      width: 55px;
-    }
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
-    Campus Connect
-  </a>
-  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Announcements</a>
-      </li>
-    </ul>
-  </div>
-  <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
-    <a class="nav-link" href="#">
-      <img src="profile_picture.jpg" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
-    </a>
-  </div>
-</nav>
+
+<?php
+  include "header.php";
+?>
+
 
 <div id="alertContainer"></div>
 

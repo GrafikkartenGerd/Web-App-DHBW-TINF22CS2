@@ -1,3 +1,9 @@
+<?php
+
+include "auth.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,17 +11,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile Page</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     .header {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
+        padding: 0px;
+        text-align: left;
     }
-    
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
+
+    .header img {
+        height: 60px;
+        width: 60px;
+        margin-right: 10px;
+    }
+
+    .header span {
+        font-size: 30px;
+        font-weight: bold;
     }
     
     .profile-box {
@@ -123,12 +134,7 @@
         display: none;
 
       }
-
-
-
     }
-
-
 
     @media (max-width: 767px) {
       .password-change-window {
@@ -183,7 +189,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">
     <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
-    Campus Connect
+    <span class="header">CampusConnect</span>
   </a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -191,17 +197,26 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="index.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Announcements</a>
+        <a class="nav-link" href="logout.php">Announcements</a>
       </li>
+      <?php
+        if($_SESSION["is_admin"])
+          echo '<li class="nav-item">
+                  <a class="nav-link" href="../admin/users.php">Admin Panel</a>
+                </li>'
+      ?>
     </ul>
   </div>
   <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
-    <a class="nav-link" href="#">
-      <img src="default.jpg" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
+    <a class="nav-link" href="profile.php">
+      <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
     </a>
+  </div>
+    <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
+     <a class="nav-link fa fa-sign-out" href="logout.php" style="font-size:30px; margin-right:10px"></a>
   </div>
 </nav>
 
@@ -228,11 +243,6 @@
     document.querySelector('.navbar-collapse').classList.toggle('show');
   });
 </script>
-<header class="header">
-  <div class="container">
-    <h1>Profile Page</h1>
-  </div>
-</header>
 
 <div class="container">
   <div class="row justify-content-center">
@@ -269,8 +279,8 @@
               <input type="text" class="form-control" id="course">
             </div>
             <div class="password-change-button">
-              <button class="btn btn-primary" onclick="openPasswordChangeWindow()">Change Password</button>
-              <button class="btn btn-primary" onclick="saveProfileChanges()">Save</button> <!-- New button -->
+              <button class="btn btn-primary" onclick="return openPasswordChangeWindow()">Change Password</button>
+              <button class="btn btn-primary">Save</button>
             </div>
           </form>
         </div>
@@ -318,11 +328,13 @@
   function openPasswordChangeWindow() {
     const passwordChangeWindow = document.querySelector('.password-change-window');
     passwordChangeWindow.style.display = 'flex';
+    return false;
   }
   
   function closePasswordChangeWindow() {
     const passwordChangeWindow = document.querySelector('.password-change-window');
     passwordChangeWindow.style.display = 'none';
+
   }
 </script>
 </body>

@@ -19,21 +19,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="header.css">
   <title>CampusConnect Admin - Events</title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">CampusConnect</a>
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="users.php">Users</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="events.php">Events</a>
-    </li>
-  </ul>
-</nav>
+
+<?php
+  include "header.php";
+?>
 
   <div class="container mt-4">
    <div id="alertContainer"></div>

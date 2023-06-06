@@ -1,0 +1,38 @@
+ .navbar-icon {
+     width: 55px;
+ }
+
+ .header {
+     padding: 0px;
+     text-align: left;
+ }
+
+ .header img {
+     height: 60px;
+     width: 60px;
+     margin-right: 10px;
+ }
+
+ .header span {
+     font-size: 30px;
+     font-weight: bold;
+ }
+
+@media (max-width: 991.98px) {
+     .navbar-toggler {
+         margin-left: auto !important;
+         margin-right: 0.5rem !important;
+     }
+
+     .navbar-nav.ml-auto:not(.collapse) {
+         display: flex !important;
+     }
+
+     .navbar:not(.navbar-expand-lg) {
+         padding-right: 1rem;
+     }
+
+     .navbar-collapse {
+         padding-left: 1rem;
+     }
+ }

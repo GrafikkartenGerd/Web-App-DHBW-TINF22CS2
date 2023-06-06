@@ -43,7 +43,7 @@ mc.on('panend', function (e)
 
 function explodeCard()
 {
-    $(eventCard).hide("explode", { pieces: 5 }, 200);
+    $(eventCard).hide("explode", { pieces: 5 }, 150);
 }
 
 function showConfirmation()

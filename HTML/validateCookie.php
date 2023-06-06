@@ -17,7 +17,8 @@ $controller = new AuthController();
 
 $current_time = time();
 $current_date = date("Y-m-d H:i:s", $current_time);
-$cookie_expiration_time = $current_time + (30 * 24 * 60 * 60);  // 1 monat
+
+$cookie_expiration_time = $current_time + $cookie_expiration_delay;
 
 if (!empty($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
     return true;
