@@ -9,6 +9,5 @@ function showAlert(message, alertType)
     // Add the alert to the page
     $('#alertContainer').append(alert);
 
-    // Scroll to the top of the page to show the alert
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 }
