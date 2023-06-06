@@ -23,6 +23,7 @@
       border-radius: 10px;
       padding: 20px;
       margin-top: 20px;
+      margin-bottom: 20px;
     }
     
     .profile-pic-container {
@@ -44,6 +45,7 @@
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
+      width: 100px;
       padding: 10px 20px;
       background-color: rgba(0, 0, 0, 0.7);
       color: white;
@@ -95,6 +97,8 @@
       cursor: pointer;
       color: white;
     }
+
+    
     
     .forgot-password {
       display: block;
@@ -108,12 +112,24 @@
       color: white;
       padding: 10px;
       text-align: center;
-      position: fixed;
+      position: relative;
       bottom: 0;
       left: 0;
       width: 100%;
     }
     
+    @media (min-width: 768px) {
+      .password-change-window-close2 {
+        display: none;
+
+      }
+
+
+
+    }
+
+
+
     @media (max-width: 767px) {
       .password-change-window {
         position: static;
@@ -122,17 +138,48 @@
         background-color: transparent;
         display: block;
         padding-top: 20px;
+        display: none;
       }
       
       .password-change-window-inner {
         border-radius: 0;
       }
+
+      .password-change-window-close {
+       display:none;
+      }
+
+      .password-change-window-close2 {
+        text-decoration: underline;
+        font-size:20px;
+        position: relative;
+        top: 80%;
+        right: 90%;
+        cursor: pointer;
+        color: black;
+      }
+
+        .footer {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+
+    .navbar-icon {
+    width: 55px; 
     }
   </style>
 </head>
 <body>
-style>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">
     <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
@@ -153,7 +200,7 @@ style>
   </div>
   <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
     <a class="nav-link" href="#">
-      <img src="profile_picture.jpg" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
+      <img src="default.jpg" alt="Profile Picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
     </a>
   </div>
 </nav>
@@ -181,24 +228,6 @@ style>
     document.querySelector('.navbar-collapse').classList.toggle('show');
   });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <header class="header">
   <div class="container">
     <h1>Profile Page</h1>
@@ -210,11 +239,15 @@ style>
     <div class="col-lg-6">
       <div class="profile-box">
         <div class="profile-pic-container">
-          <img src="profile_picture.jpg" alt="Profile Picture">
+          <img src="default.jpg" alt="Profile Picture">
           <button class="upload-btn">Upload Profile Picture</button>
         </div>
         <div class="profile-info">
           <form>
+          <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username">
+            </div>
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
               <input type="text" class="form-control" id="name">
@@ -231,8 +264,13 @@ style>
               <label for="birthday" class="form-label">Birthday</label>
               <input type="date" class="form-control" id="birthday">
             </div>
+            <div class="mb-3">
+              <label for="course" class="form-label">Course</label>
+              <input type="text" class="form-control" id="course">
+            </div>
             <div class="password-change-button">
               <button class="btn btn-primary" onclick="openPasswordChangeWindow()">Change Password</button>
+              <button class="btn btn-primary" onclick="saveProfileChanges()">Save</button> <!-- New button -->
             </div>
           </form>
         </div>
@@ -244,6 +282,7 @@ style>
 <div class="password-change-window">
   <div class="password-change-window-inner">
     <div class="password-change-window-close" onclick="closePasswordChangeWindow()">X</div>
+    <div class="password-change-window-close2" onclick="closePasswordChangeWindow()">close</div>
     <h2>Change Password</h2>
     <form>
       <div class="mb-3">
