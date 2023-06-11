@@ -50,7 +50,7 @@ include "auth.php"
           <textarea class="form-control" id="eventContent" rows="3" placeholder="Enter event content" required></textarea>
         </div>
         <div class="mb-3">
-          <input type="hidden" class="form-control" id="eventHost" placeholder="Enter event host" required>
+          <input type="hidden" class="form-control" id="eventHost" value="" required>
         </div>
         <div class="mb-3">
           <label for="eventPoster" class="form-label">Event Poster</label>
