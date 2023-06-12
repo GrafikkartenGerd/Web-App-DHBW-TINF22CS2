@@ -2,24 +2,24 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
   }
   html{
     height: 100%;
     margin: 0;
-    padding: 0;
   }
   
-  body {
-    display: flex;
-    flex-direction: column;
-  }
+ 
   
   main {
+   
     flex-grow: 1;
     margin-top: auto;
   }
-  body::-webkit-scrollbar{
+  html::-webkit-scrollbar{
     width: 0px;
+    height: 0px;
     background-color: transparent;
   }
   
