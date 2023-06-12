@@ -18,11 +18,10 @@ body {
     flex-grow: 1;
     margin-top: auto;
   }
-  html::-webkit-scrollbar{
+  body::-webkit-scrollbar{
     width: 0px;
     background-color: transparent;
   }
-
   
   footer {
       background-color: #333;
