@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             height: 100%;
             margin: 0;
             background-color: #f8f9fa;
-            overflow: scroll;
+           
         }
 
         .register-container {
