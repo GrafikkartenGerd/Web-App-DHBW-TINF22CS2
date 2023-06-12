@@ -101,7 +101,7 @@ class UserController extends BaseController
         
         $uploadDir =  realpath('/pfp/');
         $fileName = $uid.".webp";
-        $uploadPath =$uploadDir.$fileName;
+        $uploadPath = $uploadDir.$fileName;
         if(!move_uploaded_file($file['tmp_name'], $uploadPath))
             return "Internal server error.";
 
