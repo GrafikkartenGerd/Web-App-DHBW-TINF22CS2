@@ -71,15 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $controller = new AuthController();
             $result = $controller->register($username, $password, $name, $surname, new DateTime($birthday), $gender, $matricNum, "", "", $course);
-
             if($result === false)
                 $errorMessage = "Internal server error.";
             else if($result !== true)
                 $errorMessage = $result;
-            else
+            else{
                 header("Location: login.php");
-            
-            exit();
+                exit();
+            }
         }
     } else {
         $errorMessage = "Please fill in all fields.";
@@ -258,19 +257,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p class="text-center login-link">Already have an account? <a href="login.php">Login</a></p>
             </form>
         </div>
-
-        <script>
-            $('.gender').click(function() {
-                $(this).find('.btn').toggleClass('active');  
-                if ($(this).find('.btn-primary').length>0) {
-                    $(this).find('.btn').toggleClass('btn-primary');
-                }
-                $(this).find('.btn').toggleClass('btn-default');
-            });
-        </script>
     </main>
     <?php
-        include("footer.php")
+        include("footer.php");
     ?>
 </body>
 </html>
