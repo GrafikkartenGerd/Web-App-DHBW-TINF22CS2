@@ -26,6 +26,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="footer.css">
   <style>
     .profile-picture {
       width: 200px;
@@ -39,7 +40,7 @@
 <?php
   include "header.php";
 ?>
-
+<main>
   <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-12">
@@ -87,7 +88,10 @@
       </div>
     </div>
   </div>
-
+  </main>
+  <?php
+    include("footer.php")
+  ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
