@@ -1,5 +1,5 @@
 <footer>
 <div class="container">
-    &copy; 2023 Profile Page. All rights reserved.
+    &copy; 2023 CampusConnect. All rights reserved.
   </div>
   </footer>
