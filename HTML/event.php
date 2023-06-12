@@ -12,11 +12,29 @@ $event = $controller->getEventById($_GET["id"]);
 if($event == null)
   $controller->fail(404);
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  $accept = $_POST['accept'] ?? null;
+  if($accept == null)
+    exit;
+
+  $_accept = filter_var($accept, FILTER_VALIDATE_BOOLEAN);
+  
+  if($_accept == true)
+    $controller->userAcceptEvent($event, $_SESSION["user"]["id"]);
+  else
+    $controller->userDeclineEvent($event, $_SESSION["user"]["id"]);
+
+  exit;
+}
+
 $participantIds = $controller->getParticipants($event);
 $participants = [];
 
 require_once "../api/UserController.php";
 $userController = new UserController();
+
+$eventHost = $userController->getUserById($event["host"]);
 
 if($participantIds != null){
   foreach ($participantIds as $uid){
@@ -26,6 +44,8 @@ if($participantIds != null){
       $participants[] = $user;
   }
 }
+
+$participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION["user"]["id"]);
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +57,8 @@ if($participantIds != null){
   <!-- Include Bootstrap CSS and any other necessary CSS files -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="header.css">
   <link rel="stylesheet" href="footer.css">
   <style>
@@ -73,27 +95,9 @@ if($participantIds != null){
         color: #888;
     }
   
-    .attendees-list {
+    .participants-list {
         margin-top: 20px;
     }
-  
-  .attendee-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .attendee-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .attendee-name {
-    font-weight: bold;
-  }
   
 </style>
 </head>
@@ -106,6 +110,11 @@ if($participantIds != null){
         <?php if (isset($event)): ?>
           <h3><?php echo $event['name']; ?></h3>
           <div class="event-caption"><?php echo $event['content']; ?></div>
+      
+          <div class="d-flex align-items-center">
+        <img src="<?php echo $eventHost["profile_picture"]?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
+        <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $eventHost["id"]?>"><?php echo $eventHost["username"]?></a>
+      </div>
           <div class="d-flex align-items-center mt-2">
         <i class="far fa-calendar-alt"></i>
         <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["date"]?></p>
@@ -114,6 +123,15 @@ if($participantIds != null){
             <i class="fas fa-map-marker-alt"></i>
             <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event['place']; ?></p>
         </div>
+        <?php if ($event["host"] != $_SESSION["user"]["id"]): ?>
+        <div style="margin-top:10px">
+          <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" <?php if($participationStatus == 1) echo "checked"?> onclick="changeEventStatus(true);">
+          <label class="btn btn-outline-success" for="success-outlined">Join</label>
+
+          <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off" <?php if($participationStatus == 2) echo "checked"?> onclick="changeEventStatus(false);">
+          <label class="btn btn-outline-danger" for="danger-outlined">Decline</label>
+        </div>
+        <?php endif; ?>
         <?php endif; ?>
       </div>
     </div>
@@ -134,13 +152,33 @@ if($participantIds != null){
 
     <div class="row mt-4">
       <div class="col">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Event URL" onclick="copyEventUrl(this);">
           <i class="fas fa-share"></i> Share
         </button>
       </div>
     </div>
   </div>
 </main>
+
+<script>
+
+  window.eventId=<?php echo $event["id"]?>
+
+  function copyEventUrl(sender){
+    sender.className = "btn btn-success";
+    var fa = sender.querySelector("i");
+    fa.className = "fas fa-check";
+    sender.innerHTML = fa.outerHTML + " Copied URL to clipboard";
+    navigator.clipboard.writeText(window.location.href);
+  }
+
+  function changeEventStatus(accept){
+    $.post('event.php?id=' + window.eventId, { accept: accept }, function(response) {
+      location.reload();
+      });
+  }
+
+</script>
 
 <?php
   include("footer.php");

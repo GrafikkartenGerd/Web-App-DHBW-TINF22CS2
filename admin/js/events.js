@@ -10,7 +10,12 @@ function refreshEventList(){
 
         eventList.forEach(function (event) {
             var row = $("<tr>");
-            $("<td>").text(event.name).appendTo(row);
+
+            var eventNameCell = $('<td>')
+            var eventLink = $('<a>').attr('href', '../HTML/event.php?id=' + event.id).text(event.name);
+            eventNameCell.append(eventLink);
+
+            eventNameCell.appendTo(row);
             $("<td>").text(event.place).appendTo(row);
             $("<td>").text(event.host).appendTo(row);
 

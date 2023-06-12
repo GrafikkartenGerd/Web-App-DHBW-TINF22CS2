@@ -20,7 +20,7 @@ class UserController extends BaseController
     public function searchUsers($query){
 
         $query = '%'.$query.'%';
-        $result = $this->db->select("SELECT username, name, surname, course FROM users WHERE username LIKE ? OR name LIKE ? OR surname LIKE ? or course LIKE ?;", "ssss", [$query, $query, $query, $query]);
+        $result = $this->db->select("SELECT id, username, name, surname, course FROM users WHERE username LIKE ? OR name LIKE ? OR surname LIKE ? or course LIKE ?;", "ssss", [$query, $query, $query, $query]);
 
         if($result == false)
             return null;
@@ -99,8 +99,8 @@ class UserController extends BaseController
         if(round(filesize($file['tmp_name']) / 1024 / 1024, 1) > 2)
             return "Profile picture is too large (Max 2MB)";
         
-        $uploadDir =  realpath('/pfp/');
-        $fileName = $uid.".webp";
+        $uploadDir =  "../pfp";
+        $fileName = "/".$uid.".webp";
         $uploadPath = $uploadDir.$fileName;
         if(!move_uploaded_file($file['tmp_name'], $uploadPath))
             return "Internal server error.";

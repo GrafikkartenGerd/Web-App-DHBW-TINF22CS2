@@ -4,6 +4,11 @@ var mc = new Hammer(eventCard);
 var initialX = null;
 var isSwiping = false;
 
+function changeEventStatus(accept){
+    $.post('event.php?id=' + window.event.id, { accept: accept }, function(response) {
+      });
+}
+
 mc.on('panstart', function (e)
 {
     initialX = e.center.x;
@@ -30,12 +35,13 @@ mc.on('panend', function (e)
     {
         eventCard.classList.add('swipe-left');
         explodeCard();
-
+        changeEventStatus(false);
     } else if (deltaX > threshold)
     {
         eventCard.classList.add('swipe-right');
         showConfirmation();
         eventCard.style.display = "none";
+        changeEventStatus(true);
     }
 
     fetchNextEvent();

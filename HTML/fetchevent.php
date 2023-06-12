@@ -1,5 +1,6 @@
 <?php
-    // TODO auth
+
+include "auth.php";
 
 require_once("../api/UserController.php");
 require_once("../api/EventController.php");
@@ -7,7 +8,7 @@ require_once("../api/EventController.php");
 header('Content-type: application/json');
 
 $userController = new UserController();
-$userAccount = $userController->getUserByUsername("johndoe");
+$userAccount = $_SESSION["user"];
 
 $eventController = new EventController();
 $events = $eventController->getEventsforUser($userAccount, "all");

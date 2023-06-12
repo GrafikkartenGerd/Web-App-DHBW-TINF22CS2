@@ -64,11 +64,12 @@ function fetchNextEvent() {
 function populateEventCard(data) {
   var eventCard = document.getElementById('eventCard');
   var event = data.event;
+  window.event = event;
   var user = data.host;
   // Update the card content with the retrieved data
   eventCard.innerHTML = `
     <div class="card-body">
-      <h5 class="card-title">${event.name}</h5>
+      <a href="event.php?id=${event.id}"><h5 class="card-title">${event.name}</h5></a>
       <p class="card-text">${event.content}</p>
       <div class="d-flex align-items-center">
         <img src="${user.profile_picture}" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">

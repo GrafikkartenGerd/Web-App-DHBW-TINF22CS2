@@ -66,6 +66,8 @@ class EventController extends BaseController
 
     public function userEventAcceptanceStatus($event, $uid){
 
+        if($event["host"] == $uid) return 1;
+
         $acceptedUsers = explode(',', $event['accepted']);
         $declinedUsers = explode(',', $event['declined']);
         
@@ -101,11 +103,17 @@ class EventController extends BaseController
             $accepted = implode(',', $acceptedUsers);
         }
 
+        if(!isset($declined))
+            $declined = $event['declined'];
+
+        if(!isset($accepted))
+            $accepted = $event['accepted'];
+
         return $this->db->exec("UPDATE events SET accepted=?, declined=? WHERE id=?", "ssi", [$accepted, $declined, $event["id"]]);
     }
 
     public function userDeclineEvent($event, $uid){
-
+        
         $acceptedUsers = explode(',', $event['accepted']);
         $declinedUsers = explode(',', $event['declined']);
         
@@ -120,6 +128,12 @@ class EventController extends BaseController
             $declined = implode(',', $declinedUsers);
         }
 
+        if(!isset($accepted))
+            $accepted = $event['accepted'];
+
+        if(!isset($declined))
+            $declined = $event['declined'];
+        
         return $this->db->exec("UPDATE events SET accepted=?, declined=? WHERE id=?", "ssi", [$accepted, $declined, $event["id"]]);
 
     }
