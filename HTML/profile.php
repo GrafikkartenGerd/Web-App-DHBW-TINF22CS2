@@ -1,7 +1,30 @@
 <?php
+include "auth.php";
 
-include "auth.php"
+if (isset($_FILES['profile_picture'])){
+  $file = $_FILES['profile_picture'];
 
+  // Specify the directory to which you want to save the uploaded files
+  $uploadDir = 'uploads/';
+
+  // Generate a unique filename for the uploaded file
+  $fileName = uniqid() . '_' . $file['name'];
+
+  // The path where the file will be saved
+  $uploadPath = $uploadDir . $fileName;
+
+  // Move the uploaded file to the desired location
+  move_uploaded_file($file['tmp_name'], $uploadPath);
+
+  // Update the profile picture variable with the new path
+  $profilePic = $uploadPath;
+
+  // Display success message
+  $message = "File uploaded successfully!";
+} else {
+  $profilePic = "default.jpg";
+  $message = "";
+}
 ?>
 
 <!DOCTYPE html>
@@ -160,18 +183,21 @@ include "auth.php"
 <?php
   include "header.php";
 ?>
+
 <main>
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <div class="profile-box">
-        <div class="profile-pic-container">
-          <img src="default.jpg" alt="Profile Picture">
-          <button class="upload-btn">Upload Profile Picture</button>
-        </div>
-        <div class="profile-info">
-          <form>
-          <div class="mb-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="profile-box">
+          <div class="profile-pic-container">
+            <img src="<?php echo $profilePic; ?>" alt="Profile Picture" onclick="document.getElementById('profile_picture').click();">
+            <form action="" method="post" enctype="multipart/form-data">
+              <input type="file" name="profile_picture" id="profile_picture" accept="image/*" style="display: none;" onchange="this.form.submit()">
+            </form>
+          </div>
+          <div class="profile-info">
+            <form>
+            <div class="mb-3">
               <label for="username" class="form-label">Username</label>
               <input type="text" class="form-control" id="username">
             </div>
@@ -199,14 +225,17 @@ include "auth.php"
               <button class="btn btn-primary" onclick="return openPasswordChangeWindow()">Change Password</button>
               <button class="btn btn-primary">Save</button>
             </div>
-          </form>
+            </form>
+          </div>
+          <?php if (!empty($message)) { ?>
+            <div class="alert alert-success"><?php echo $message; ?></div>
+          <?php } ?>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="password-change-window">
+  <div class="password-change-window">
   <div class="password-change-window-inner">
     <div class="password-change-window-close" onclick="closePasswordChangeWindow()">X</div>
     <div class="password-change-window-close2" onclick="closePasswordChangeWindow()">close</div>
@@ -233,9 +262,10 @@ include "auth.php"
     </div>
   </div>
 </div>
-  </main>
+</main>
+
 <?php
-  include("footer.php")
+  include "footer.php";
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
@@ -252,5 +282,6 @@ include "auth.php"
 
   }
 </script>
+
 </body>
 </html>
