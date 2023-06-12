@@ -173,7 +173,7 @@ include "auth.php"
           <form>
           <div class="mb-3">
               <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username">
+              <input type="text" class="form-control" id="username" readonly value="<?php echo $_SESSION["user"]["username"]?>">
             </div>
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
