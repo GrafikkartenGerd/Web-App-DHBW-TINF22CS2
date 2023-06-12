@@ -13,6 +13,7 @@ include "auth.php"
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="footer.css">
   <style>
     
     .profile-box {
@@ -104,14 +105,6 @@ include "auth.php"
       color: #999;
     }
     
-    .footer {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      position: relative;
-      bottom: 0;
-    }
     
     @media (min-width: 768px) {
       .password-change-window-close2 {
@@ -236,16 +229,14 @@ include "auth.php"
       </div>
     </form>
     <div class="forgot-password">
-      <a href="forgot_password.html">Forgot Password?</a>
+      Forgot Password? Write an Email to: admin@campusconnect.de
     </div>
   </div>
 </div>
 
-<footer class="fixed-bottom footer">
-  <div class="container">
-    &copy; 2023 Profile Page. All rights reserved.
-  </div>
-</footer>
+<?php
+  include("footer.php")
+?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>

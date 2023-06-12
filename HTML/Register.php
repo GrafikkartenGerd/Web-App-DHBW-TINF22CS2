@@ -98,7 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <style>
+    <link rel="stylesheet" href="footer.css">
+    <style>
         body {
             width: 100%;
             height: 100%;
@@ -190,15 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: bold;
         }
 
-        .footer {
-            background-color: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .footer p {
-            margin: 0;
-        }
+       
 
         .logo-text {
             font-size: 24px;
@@ -276,10 +269,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
         </script>
     </main>
-
-
-    <footer class="footer">
-        <p>&copy; 2023 CampusConnect. All rights reserved.</p>
-    </footer>
+    <?php
+        include("footer.php")
+    ?>
 </body>
 </html>

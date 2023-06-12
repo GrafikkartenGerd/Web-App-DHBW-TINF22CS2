@@ -117,8 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset(
             </form>
         </div>
     </main>
-    <footer class="footer">
-        <p>&copy; 2023 CampusConnect. All rights reserved.</p>
-    </footer>
+<?php
+    include("footer.php");
+?>
 </body>
 </html>
