@@ -112,6 +112,11 @@ include "auth.php"
           <div class="event-caption">${event.caption}</div>
           <div class="event-date">Date: ${event.date}</div>
           <div class="event-place">Place: ${event.place}</div>
+          <div class="event-share">
+            <button class="btn btn-primary" onclick="shareEvent('${event.name}', '${event.caption}')">
+              <i class="fas fa-share"></i> Share
+            </button>
+          </div>
         </div>
       `;
 

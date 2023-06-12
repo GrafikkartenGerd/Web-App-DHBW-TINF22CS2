@@ -242,7 +242,7 @@ include "auth.php"
       </div>
     </form>
     <div class="forgot-password">
-      <a href="forgot_password.html">Forgot Password?</a>
+      Forgot Password? Write an Email to: admin@campusconnect.de
     </div>
   </div>
 </div>
