@@ -28,12 +28,13 @@ include "auth.php"
 <?php
   include("header.php");
 ?>
-
+<main>
 <div class="container mt-4">
   <div id="alertContainer"></div>
   <div class="card" id="eventCard" style="display: none;">
   </div>
 </div>
+  </main>
 <?php
     include("footer.php");
 ?>
