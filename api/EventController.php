@@ -64,6 +64,17 @@ class EventController extends BaseController
         return $events;
     }
 
+    public function getEventsByUser($uid){
+        $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE date > NOW() AND host=? ORDER BY date DESC LIMIT 100;", "i", [$uid]);
+    
+        if($events == false)
+        return null;
+
+        $events = $events->fetch_all(MYSQLI_ASSOC);
+        
+        return $events;
+    }
+
     public function userEventAcceptanceStatus($event, $uid){
 
         if($event["host"] == $uid) return 1;

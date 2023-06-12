@@ -1,18 +1,31 @@
 <?php
 include "auth.php";
 
+$auth = new AuthController();
+$_SESSION["user"] = $auth->refreshUser($_SESSION["user"]["username"]);
+
 $action = $_GET['do'] ?? null;
 
 if($action !== null){
 
   require_once "../api/UserController.php";
 
+  $controller = new UserController();
+
   if($action == "profile"){
 
+    $name = $_POST['name'] ?? null;
+    $surname = $_POST['surname'] ?? null;
+    $bio = $_POST['bio'] ?? null;
+
+    if($name != null && $surname != null && $bio != null){
+      $controller->updateProfileInfo($_SESSION["user"]["id"], $name, $surname, $bio);
+    }else{
+      $errorMessage = "Missing parameters.";
+    }
   }
   else if($action == "pic"){
 
-    $controller = new UserController();
     $result = $controller->changeProfilePicture($_SESSION["user"]["id"]);
     
     if($result === false)
@@ -21,10 +34,36 @@ if($action !== null){
         $errorMessage = $result;
 
   }else if($action == "pass"){
+    $oldPassword = $_POST['current-password'] ?? null;
+    $newPassword = $_POST['password'] ?? null;
+    $passwordConfirm = $_POST['confirm-password'] ?? null;
 
+    if($oldPassword != null && $newPassword != null && $passwordConfirm != null){
+      if(strlen($newPassword) < PASSWORD_LENGTH){
+        $errorMessage = "Password should be at least ".PASSWORD_LENGTH." characters long.";
+      
+
+      }else if($newPassword != $passwordConfirm){
+        $errorMessage = "New password did not match confirmation password.";
+
+      }else{
+        
+        $controller= new AuthController();
+        $result = $controller->changePassword($_SESSION["user"], $oldPassword, $newPassword);
+
+        if($result === false)
+          $errorMessage = "Internal server error.";
+        else if($result !== true)
+          $errorMessage = $result;
+      }
+    }
   }
 
+  $auth = new AuthController();
+  $_SESSION["user"] = $auth->refreshUser($_SESSION["user"]["username"]);
 }
+  
+
 ?>
 
 <!DOCTYPE html>
@@ -217,7 +256,7 @@ if($action !== null){
             </div>
             <div class="mb-3">
               <label for="bio" class="form-label">Bio</label>
-              <input type="bio" class="form-control" id="bio" name="bio">
+              <input type="bio" class="form-control" id="bio" name="bio" value="<?php echo $_SESSION["user"]["bio"]?>">
             </div>
             <div class="mb-3">
               <label for="birthday" class="form-label">Birthday</label>

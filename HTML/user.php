@@ -2,6 +2,7 @@
   require "auth.php";
 
   require_once "../api/UserController.php";
+  require_once "../api/EventController.php";
 
   $uid = $_GET['id'] ?? null;
 
@@ -10,6 +11,9 @@
 
   $controller = new UserController();
   $userInfo = $controller->getUserById($uid, true);
+
+  $eventController = new EventController();
+  $userEvents = $eventController->getEventsByUser($uid);
 
   if($userInfo == null){
     $controller->fail(404);
@@ -33,6 +37,11 @@
       height: auto;
       padding: 12px;
     }
+
+    .card {
+      margin-bottom: 20px;
+    }
+
   </style>
 </head>
 <body>
@@ -72,18 +81,27 @@
 
     <div class="row mt-4">
       <div class="col-md-12">
-        <h3>Events Created</h3>
-        <div class="card">
+        <h3>Events Created (<?php echo count($userEvents)?>):</h3>
+        <?php foreach ($userEvents as $event): ?>
+          <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Event 1</h5>
-            <p class="card-text">Some description about Event 1.</p>
-            <div class="event-details">
-              <i class="far fa-calendar-alt"></i> October 10, 2023
-              <i class="fas fa-map-marker-alt"></i> Event Location 1
-            </div>
+              <a href="event.php?id=<?php echo $event["id"]?>"><h5 class="card-title"><?php echo $event["name"]?></h5></a>
+              <p class="card-text"><?php echo $event["content"]?></p>
+              <div class="d-flex align-items-center mt-2">
+                <i class="far fa-calendar-alt"></i>
+                <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["date"]?></p>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fas fa-map-marker-alt"></i>
+                <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["place"]?></p>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fas fa-user"></i>
+                <p class="mb-0 ml-2" style="margin-left:7px">Participants: <?php echo count($eventController->getParticipants($event))-1?></p>
+              </div>
           </div>
         </div>
-
+        <?php endforeach; ?>
         
       </div>
     </div>

@@ -48,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
 
-        if (strlen($password) < 8) {
+        if (strlen($password) < PASSWORD_LENGTH) {
             $isValid = false;
-            $errorMessage = "Password should be at least 8 characters long.";
+            $errorMessage = "Password should be at least ".PASSWORD_LENGTH." characters long.";
         }
 
         $dateParts = explode('-', $birthday);

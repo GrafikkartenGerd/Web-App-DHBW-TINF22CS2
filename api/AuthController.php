@@ -19,7 +19,7 @@ class AuthController extends BaseController
 
     public function login($username, $password)
     {
-        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin, stuv from users WHERE username=?", "s", [$username]);
+        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin, stuv, bio from users WHERE username=?", "s", [$username]);
 
         if($result == false)
             return null;
@@ -36,8 +36,19 @@ class AuthController extends BaseController
         return $result[0];
     }
 
+    public function changePassword($user, $oldPassword, $newPassword){
+        $result = $this->login($user["username"], $oldPassword);
+
+        if($result == false || $result == null)
+            return "Wrong password.";
+        
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        return $this->db->exec("UPDATE users SET password=? WHERE id=?", "si", [$hashedPassword, $user["id"]]);
+    }
+
     public function refreshUser($username){
-        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin, stuv from users WHERE username=?", "s", [$username]);
+        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin, stuv, bio from users WHERE username=?", "s", [$username]);
 
         if($result == false)
             return null;

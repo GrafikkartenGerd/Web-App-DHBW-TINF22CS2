@@ -87,6 +87,11 @@ class UserController extends BaseController
         return $result[0];
     }
 
+    public function updateProfileInfo($uid, $name, $surname, $bio){
+        $result = $this->db->exec("UPDATE users SET name=?, surname=?, bio=? WHERE id=?", "sssi", [$name, $surname, $bio, $uid]);
+        return $result;
+    }
+
     public function changeProfilePicture($uid){
         if(!isset($_FILES['profile_picture']))
             return "Invalid profile picture.";

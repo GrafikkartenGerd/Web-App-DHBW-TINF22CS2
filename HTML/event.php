@@ -138,7 +138,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 
     <div class="row mt-4">
       <div class="col">
-        <h4>Participants:</h4>
+        <h4>Participants (<?php echo count($participants)?>):</h4>
         <ul class="participant-list">
           <?php foreach ($participants as $participant): ?>
             <div class="d-flex align-items-center">
