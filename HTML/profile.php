@@ -111,8 +111,6 @@ include "auth.php"
       text-align: center;
       position: relative;
       bottom: 0;
-      left: 0;
-      width: 100%;
     }
     
     @media (min-width: 768px) {
@@ -156,10 +154,6 @@ include "auth.php"
         color: white;
         padding: 10px;
         text-align: center;
-        position: relative;
-        bottom: 0;
-        left: 0;
-        width: 100%;
       }
     }
     .card {
@@ -247,7 +241,7 @@ include "auth.php"
   </div>
 </div>
 
-<footer class="footer">
+<footer class="fixed-bottom footer">
   <div class="container">
     &copy; 2023 Profile Page. All rights reserved.
   </div>

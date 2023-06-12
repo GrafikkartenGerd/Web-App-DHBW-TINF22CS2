@@ -1,12 +1,104 @@
+<?php
+
+session_start();
+if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+    header('Location: index.php');
+    exit;
+}
+
+$cookie_login = require_once("validateCookie.php");
+
+if($cookie_login){
+    require_once "../api/AuthController.php";
+
+    $username = $_COOKIE["user"];
+    $controller = new AuthController();
+    $result = $controller->refreshUser($username);
+
+    $_SESSION["logged_in"] = true;
+    $_SESSION["is_admin"] = $result["is_admin"] == 1;
+    $_SESSION["user"] = $result;
+
+    header('Location: index.php');
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    require_once "../api/AuthController.php";
+
+    $username = $_POST['username'] ?? null;
+    $name = $_POST['name'] ?? null;
+    $surname = $_POST['surname'] ?? null;
+    $gender = $_POST['gender'] ?? null;
+    $password = $_POST['password'] ?? null;
+    $confirmPassword = $_POST['confirm-password'] ?? null;
+    $matricNum = $_POST['matricnum'] ?? null;
+    $course = $_POST['course'] ?? null;
+    $birthday = $_POST['birthday'] ?? null;
+
+    if ($username !== null && $name !== null && $surname !== null && $password !== null && $confirmPassword !== null && $matricNum !== null && $course !== null && $gender !== null
+        && $birthday !== null && !empty($birthday)) {
+
+        $isValid = true;
+
+        if(strlen($username) > 30){
+            $isValid = false;
+            $errorMessage = "Username can't be longer than 30 characters.";
+        }
+
+
+        if (strlen($password) < 8) {
+            $isValid = false;
+            $errorMessage = "Password should be at least 8 characters long.";
+        }
+
+        $dateParts = explode('-', $birthday);
+        if (!(count($dateParts) === 3 && checkdate($dateParts[1], $dateParts[2], $dateParts[0]))) {
+            $isValid = false;
+            $errorMessage = "Invalid date format.";
+
+        }
+    
+        if ($password !== $confirmPassword) {
+            $isValid = false;
+            $errorMessage = "Passwords do not match.";
+        }
+
+        $gender = $gender == "Male" ? "m" : "f";
+
+        if ($isValid) {
+
+            $controller = new AuthController();
+            $result = $controller->register($username, $password, $name, $surname, new DateTime($birthday), $gender, $matricNum, "", "", $course);
+
+            if($result === false)
+                $errorMessage = "Internal server error.";
+            else if($result !== true)
+                $errorMessage = $result;
+            else
+                header("Location: login.php");
+            
+            exit();
+        }
+    } else {
+        $errorMessage = "Please fill in all fields.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>CampusConnect - Register</title>
     <meta name="description" content="Register">
-    <link rel="stylesheet" type="text/css" href="swipecss.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="swipecss.css" media="screen">  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
+  <style>
         body {
             width: 100%;
             height: 100%;
@@ -121,37 +213,71 @@
     </header>
     <main>
         <div class="container register-container">
+            <div id="alertContainer">
+                    <?php
+                        if(isset($errorMessage))
+                            echo '<div role="alert" class="alert alert-danger">'.$errorMessage.'</div>';
+                    ?>
+                </div>
             <h2 class="text-center mb-4">Register</h2>
-            <form class="register-form">
+            <form class="register-form" method="post" action="register.php">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+                </div>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
                 </div>
                 <div class="form-group">
                     <label for="surname">Surname</label>
-                    <input type="text" class="form-control" id="surname" placeholder="Enter surname">
+                    <input type="text" class="form-control" id="surname" name="surname" placeholder="Enter surname" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                    <label for="gender">Gender</label>
+                    <br>
+                    <select name="gender" class="form-control" value="Male">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="birthday" class="form-label">Birthday</label>
+                    <input type="date" class="form-control" name="birthday" id="birthday">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
                 </div>
                 <div class="form-group">
                     <label for="confirm-password">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password">
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm password" required>
+                </div>
+                <div class="form-group">
+                    <label for="matricnum">Matriculation Number</label>
+                    <input type="number" class="form-control" id="matricnum" name="matricnum" placeholder="Enter Matriculation Number" required>
                 </div>
                 <div class="form-group">
                     <label for="course">Course</label>
-                    <input type="text" class="form-control" id="course" placeholder="Enter course">
+                    <input type="text" class="form-control" id="course" name="course" placeholder="Enter course" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
                 <p class="text-center login-link">Already have an account? <a href="login.php">Login</a></p>
             </form>
         </div>
+
+        <script>
+            $('.gender').click(function() {
+                $(this).find('.btn').toggleClass('active');  
+                if ($(this).find('.btn-primary').length>0) {
+                    $(this).find('.btn').toggleClass('btn-primary');
+                }
+                $(this).find('.btn').toggleClass('btn-default');
+            });
+        </script>
     </main>
+
+
     <footer class="footer">
         <p>&copy; 2023 CampusConnect. All rights reserved.</p>
     </footer>

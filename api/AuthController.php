@@ -89,7 +89,7 @@ class AuthController extends BaseController
         $result = $result->fetch_all(MYSQLI_ASSOC);
 
         if(count($result) != 0)
-            return "Username unavailable";
+            return "Username unavailable.";
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $authToken = bin2hex(random_bytes(32));

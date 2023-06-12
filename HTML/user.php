@@ -1,3 +1,7 @@
+<?php
+  require "auth.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="header.css">
   <style>
     .profile-picture {
       width: 200px;
@@ -16,6 +21,11 @@
   </style>
 </head>
 <body>
+
+<?php
+  include "header.php";
+?>
+
   <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-12">
@@ -59,22 +69,13 @@
             <h5 class="card-title">Event 1</h5>
             <p class="card-text">Some description about Event 1.</p>
             <div class="event-details">
-              <i class="far fa-calendar"></i> October 10, 2023
+              <i class="far fa-calendar-alt"></i> October 10, 2023
               <i class="fas fa-map-marker-alt"></i> Event Location 1
             </div>
           </div>
         </div>
 
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Event 2</h5>
-            <p class="card-text">Some description about Event 2.</p>
-            <div class="event-details">
-              <i class="far fa-calendar"></i> November 15, 2023
-              <i class="fas fa-map-marker-alt"></i> Event Location 2
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
