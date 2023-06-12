@@ -170,30 +170,30 @@ include "auth.php"
           <button class="upload-btn">Upload Profile Picture</button>
         </div>
         <div class="profile-info">
-          <form>
+          <form method="POST" action="profile.php?do=update">
           <div class="mb-3">
               <label for="username" class="form-label">Username</label>
               <input type="text" class="form-control" id="username" readonly value="<?php echo $_SESSION["user"]["username"]?>">
             </div>
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name">
+              <input type="text" class="form-control" id="name" value="<?php echo $_SESSION["user"]["name"]?>">
             </div>
             <div class="mb-3">
               <label for="surname" class="form-label">Surname</label>
-              <input type="text" class="form-control" id="surname">
+              <input type="text" class="form-control" id="surname" value="<?php echo $_SESSION["user"]["surname"]?>">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email">
+              <label for="bio" class="form-label">Bio</label>
+              <input type="bio" class="form-control" id="bio" name="bio">
             </div>
             <div class="mb-3">
               <label for="birthday" class="form-label">Birthday</label>
-              <input type="date" class="form-control" id="birthday">
+              <input type="date" class="form-control" id="birthday" value="<?php echo $_SESSION["user"]["birthday"]?>" readonly>
             </div>
             <div class="mb-3">
               <label for="course" class="form-label">Course</label>
-              <input type="text" class="form-control" id="course">
+              <input type="text" class="form-control" id="course" value="<?php echo $_SESSION["user"]["course"]?>" readonly>
             </div>
             <div class="password-change-button">
               <button class="btn btn-primary" onclick="return openPasswordChangeWindow()">Change Password</button>
