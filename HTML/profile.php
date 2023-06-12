@@ -1,29 +1,24 @@
 <?php
 include "auth.php";
 
-if (isset($_FILES['profile_picture'])){
-  $file = $_FILES['profile_picture'];
+$action = $_GET['do'] ?? null;
 
-  // Specify the directory to which you want to save the uploaded files
-  $uploadDir = 'uploads/';
+if($action !== null){
 
-  // Generate a unique filename for the uploaded file
-  $fileName = uniqid() . '_' . $file['name'];
+  require_once "../api/UserController.php";
 
-  // The path where the file will be saved
-  $uploadPath = $uploadDir . $fileName;
+  if($action == "profile"){
 
-  // Move the uploaded file to the desired location
-  move_uploaded_file($file['tmp_name'], $uploadPath);
+  }
+  else if($action == "pic"){
 
-  // Update the profile picture variable with the new path
-  $profilePic = $uploadPath;
+    $controller = new UserController();
+    $controller->changeProfilePicture($_SESSION["user"]["id"]);
 
-  // Display success message
-  $message = "File uploaded successfully!";
-} else {
-  $profilePic = "default.jpg";
-  $message = "";
+  }else if($action == "pass"){
+
+  }
+
 }
 ?>
 
@@ -189,25 +184,31 @@ if (isset($_FILES['profile_picture'])){
     <div class="row justify-content-center">
       <div class="col-lg-6">
         <div class="profile-box">
+          <div id="alertContainer">
+            <?php
+                if(isset($errorMessage))
+                    echo '<div role="alert" class="alert alert-danger">'.$errorMessage.'</div>';
+            ?>
+          </div>
           <div class="profile-pic-container">
-            <img src="<?php echo $profilePic; ?>" alt="Profile Picture" onclick="document.getElementById('profile_picture').click();">
-            <form action="" method="post" enctype="multipart/form-data">
+            <img src="<?php echo $_SESSION["user"]["profile_picture"]; ?>" alt="Profile Picture" onclick="document.getElementById('profile_picture').click();">
+            <form action="profile.php?do=pic" method="post" enctype="multipart/form-data">
               <input type="file" name="profile_picture" id="profile_picture" accept="image/*" style="display: none;" onchange="this.form.submit()">
             </form>
           </div>
           <div class="profile-info">
-            <form>
+            <form method="POST" action="profile.php?do=profile">
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
               <input type="text" class="form-control" id="username" readonly value="<?php echo $_SESSION["user"]["username"]?>">
             </div>
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" value="<?php echo $_SESSION["user"]["name"]?>">
+              <input type="text" class="form-control" id="name" name="name" value="<?php echo $_SESSION["user"]["name"]?>">
             </div>
             <div class="mb-3">
               <label for="surname" class="form-label">Surname</label>
-              <input type="text" class="form-control" id="surname" value="<?php echo $_SESSION["user"]["surname"]?>">
+              <input type="text" class="form-control" id="surname" name="surname" value="<?php echo $_SESSION["user"]["surname"]?>">
             </div>
             <div class="mb-3">
               <label for="bio" class="form-label">Bio</label>
@@ -227,9 +228,6 @@ if (isset($_FILES['profile_picture'])){
             </div>
             </form>
           </div>
-          <?php if (!empty($message)) { ?>
-            <div class="alert alert-success"><?php echo $message; ?></div>
-          <?php } ?>
         </div>
       </div>
     </div>
@@ -240,18 +238,18 @@ if (isset($_FILES['profile_picture'])){
     <div class="password-change-window-close" onclick="closePasswordChangeWindow()">X</div>
     <div class="password-change-window-close2" onclick="closePasswordChangeWindow()">close</div>
     <h2>Change Password</h2>
-    <form>
+    <form action="profile.php?do=pass" method="POST">
       <div class="mb-3">
         <label for="current-password" class="form-label">Current Password</label>
-        <input type="password" class="form-control" id="current-password">
+        <input type="password" class="form-control" name="current-password" id="current-password">
       </div>
       <div class="mb-3">
         <label for="new-password" class="form-label">New Password</label>
-        <input type="password" class="form-control" id="new-password">
+        <input type="password" class="form-control" name="password" id="new-password">
       </div>
       <div class="mb-3">
         <label for="confirm-password" class="form-label">Confirm New Password</label>
-        <input type="password" class="form-control" id="confirm-password">
+        <input type="password" class="form-control" name="confirm-password" id="confirm-password">
       </div>
       <div class="text-center">
         <button type="submit" class="btn btn-primary">Submit</button>

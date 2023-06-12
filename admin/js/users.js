@@ -7,7 +7,7 @@
     users.forEach(function(user) {
       var row = $('<tr>');
       var usernameCell = $('<td>').text(user.username);
-      var nameCell = $('<td>').text(user.name + user.surname);
+      var nameCell = $('<td>').text(user.name + " " + user.surname);
       var courseCell = $('<td>').text(user.course);
       var actionsCell = $('<td>');
 
@@ -41,7 +41,7 @@
   }
 
   // Function to perform user search
-  function searchUsers() {
+  function searchUsers(quiet = false) {
     var searchInput = $('#searchUserInput').val();
 
     // Send AJAX request to PHP backend with the search query
@@ -51,7 +51,8 @@
         var users = response.users;
         populateUserTable(users); // Populate the user table with the search results
       } else {
-        showAlert("Couldn't find user!", "danger");
+        if(!quiet)
+          showAlert("Couldn't find user!", "danger");
       }
     });
   }
@@ -60,8 +61,8 @@
   function deleteUser(username) {
     $.get('backend.php', { action: 'deleteUser', username: username }, function(response) {
       if (response.success) {
-        
-        searchUsers();
+        showAlert("Deleted user successfully!", "success");
+        searchUsers(true);
       } else {
         showAlert("Couldn't delete user: " + response.reason, "danger");
       }

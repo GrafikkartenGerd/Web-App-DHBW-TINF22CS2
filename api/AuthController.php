@@ -94,7 +94,7 @@ class AuthController extends BaseController
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $authToken = bin2hex(random_bytes(32));
 
-        return $this->db->exec("INSERT INTO users (username, name, surname, password, birthday, gender, matriculation_number, faculty, degree, course, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);" , "ssssssissss", [$username, $name, $surname, $hashedPassword, $birthday->format("Y-m-d"), $gender, $matriculation_number, $faculty, $degree, $course, $authToken]);
+        return $this->db->exec("INSERT INTO users (username, name, surname, password, birthday, gender, matriculation_number, faculty, degree, course, token, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);" , "ssssssisssss", [$username, $name, $surname, $hashedPassword, $birthday->format("Y-m-d"), $gender, $matriculation_number, $faculty, $degree, $course, $authToken, "/pfp/default.jpg"]);
     }
 }
 ?>
