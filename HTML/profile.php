@@ -13,7 +13,12 @@ if($action !== null){
   else if($action == "pic"){
 
     $controller = new UserController();
-    $controller->changeProfilePicture($_SESSION["user"]["id"]);
+    $result = $controller->changeProfilePicture($_SESSION["user"]["id"]);
+    
+    if($result === false)
+      $errorMessage = "Internal server error.";
+    else if($result !== true)
+        $errorMessage = $result;
 
   }else if($action == "pass"){
 
