@@ -160,7 +160,7 @@ include "auth.php"
 <?php
   include "header.php";
 ?>
-
+<main>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6">
@@ -233,7 +233,7 @@ include "auth.php"
     </div>
   </div>
 </div>
-
+  </main>
 <?php
   include("footer.php")
 ?>
