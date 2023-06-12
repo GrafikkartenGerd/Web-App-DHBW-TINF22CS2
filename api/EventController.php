@@ -34,7 +34,7 @@ class EventController extends BaseController
     }
 
     public function getEventById($eid){
-        $result = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv FROM events WHERE id=?;", "i", [$eid]);
+        $result = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE id=?;", "i", [$eid]);
 
         if($result == false)
             return null;
@@ -51,9 +51,9 @@ class EventController extends BaseController
     {
         if($filter_level != "all"){
             $filterParam = $user[$filter_level];
-            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv FROM events WHERE ".$filter_level."=? AND date > NOW() ORDER BY date ASC LIMIT 100;", "s", [$filterParam]);
+            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE ".$filter_level."=? AND date > NOW() ORDER BY date ASC LIMIT 100;", "s", [$filterParam]);
         }else{
-            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv FROM events WHERE date > NOW() ORDER BY date ASC LIMIT 100;", "", []);
+            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE date > NOW() ORDER BY date ASC LIMIT 100;", "", []);
         }
         
         if($events == false)
@@ -64,8 +64,71 @@ class EventController extends BaseController
         return $events;
     }
 
+    public function userEventAcceptanceStatus($event, $uid){
+
+        $acceptedUsers = explode(',', $event['accepted']);
+        $declinedUsers = explode(',', $event['declined']);
+        
+        if (in_array($uid, $acceptedUsers)) {
+            return 1;
+        } elseif (in_array($uid, $declinedUsers)) {
+            return 2;
+        } else {
+            return 0;
+        }
+
+    }
+
+    public function getParticipants($event){
+
+        $acceptedUsers = explode(',', $event['accepted']);
+        return $acceptedUsers;
+    }
+
+    public function userAcceptEvent($event, $uid){
+
+        $acceptedUsers = explode(',', $event['accepted']);
+        $declinedUsers = explode(',', $event['declined']);
+        
+        if (in_array($uid, $declinedUsers)) {
+            $index = array_search($uid, $declinedUsers);
+            unset($declinedUsers[$index]);
+            $declined = implode(',', $declinedUsers);
+        }
+    
+        if (!in_array($uid, $acceptedUsers)) {
+            $acceptedUsers[] = $uid;
+            $accepted = implode(',', $acceptedUsers);
+        }
+
+        return $this->db->exec("UPDATE events SET accepted=?, declined=? WHERE id=?", "ssi", [$accepted, $declined, $event["id"]]);
+    }
+
+    public function userDeclineEvent($event, $uid){
+
+        $acceptedUsers = explode(',', $event['accepted']);
+        $declinedUsers = explode(',', $event['declined']);
+        
+        if (in_array($uid, $acceptedUsers)) {
+            $index = array_search($uid, $acceptedUsers);
+            unset($acceptedUsers[$index]);
+            $accepted = implode(',', $acceptedUsers);
+        }
+        
+        if (!in_array($uid, $declinedUsers)) {
+            $declinedUsers[] = $uid;
+            $declined = implode(',', $declinedUsers);
+        }
+
+        return $this->db->exec("UPDATE events SET accepted=?, declined=? WHERE id=?", "ssi", [$accepted, $declined, $event["id"]]);
+
+    }
+
     public function createEvent($name, $date, $place, $content, $faculty, $degree, $course, $stuv, $host){
 
-        return $this->db->exec("INSERT INTO events (name, date, place, content, faculty, degree, course, stuv, host) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);" , "sssssssii", [$name, $date, $place, $content, $faculty, $degree, $course, $stuv, $host]);
+        $status = $this->db->exec("INSERT INTO events (name, date, place, content, faculty, degree, course, stuv, host) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);" , "sssssssii", [$name, $date->format('Y-m-d H:i:s'), $place, $content, $faculty, $degree, $course, $stuv, $host]);
+        if($status == false) return false;
+
+        return $this->db->insertId();
     }
 }

@@ -1,25 +1,31 @@
 <?php
 include "auth.php";
+require_once "../api/EventController.php";
 
-// Perform any necessary database queries or data retrieval to fetch the event details
-// You can use any method to retrieve the event details here
+$controller = new EventController();
 
-// Dummy data for demonstration purposes
-$event = [
-  'id' => 'SampleID123',
-  'image' => "default.jpg",
-  'name' => 'Sample Event',
-  'caption' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'date' => '2023-06-15',
-  'place' => 'Sample Place',
-];
+if(!isset($_GET["id"]))
+  $controller->fail(404);
 
-// Dummy data for attendees
-$attendees = [
-  'John Doe',
-  'Jane Smith',
-  'Mike Johnson',
-];
+$event = $controller->getEventById($_GET["id"]);
+
+if($event == null)
+  $controller->fail(404);
+
+$participantIds = $controller->getParticipants($event);
+$participants = [];
+
+require_once "../api/UserController.php";
+$userController = new UserController();
+
+if($participantIds != null){
+  foreach ($participantIds as $uid){
+    $user = $userController->getUserById($uid);
+
+    if($user !== null)
+      $participants[] = $user;
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -99,22 +105,28 @@ $attendees = [
       <div class="col">
         <?php if (isset($event)): ?>
           <h3><?php echo $event['name']; ?></h3>
-          <div class="event-image">
-            <img src="<?php echo $event['image']; ?>" alt="Event Image">
-          </div>
-          <div class="event-caption"><?php echo $event['caption']; ?></div>
-          <div class="event-date">Date: <?php echo $event['date']; ?></div>
-          <div class="event-place">Place: <?php echo $event['place']; ?></div>
+          <div class="event-caption"><?php echo $event['content']; ?></div>
+          <div class="d-flex align-items-center mt-2">
+        <i class="far fa-calendar-alt"></i>
+        <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["date"]?></p>
+      </div>
+          <div class="d-flex align-items-center">
+            <i class="fas fa-map-marker-alt"></i>
+            <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event['place']; ?></p>
+        </div>
         <?php endif; ?>
       </div>
     </div>
 
     <div class="row mt-4">
       <div class="col">
-        <h4>Attendees:</h4>
-        <ul class="attendees-list">
-          <?php foreach ($attendees as $attendee): ?>
-            <li class="attendee-item"><?php echo $attendee; ?></li>
+        <h4>Participants:</h4>
+        <ul class="participant-list">
+          <?php foreach ($participants as $participant): ?>
+            <div class="d-flex align-items-center">
+              <img src="<?php echo $participant["profile_picture"]?>" alt="Profile Picture" class="rounded-circle" style="width: 20px;">
+              <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $participant["id"]?>"><?php echo $participant["username"]?></a>
+            </div>
           <?php endforeach; ?>
         </ul>
       </div>
@@ -131,9 +143,8 @@ $attendees = [
 </main>
 
 <?php
-  include("footer.php")
+  include("footer.php");
 ?>
-  <!-- Include Bootstrap JS and any other necessary JS files -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

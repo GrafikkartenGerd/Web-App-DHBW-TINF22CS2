@@ -32,7 +32,7 @@ class UserController extends BaseController
 
     public function getUserById($uid, $minimal = false){
 
-        $cmd = "SELECT id, username, name, surname, birthday, gender, faculty, degree, course, profile_picture, bio FROM users WHERE id=?;";
+        $cmd = "SELECT id, username, name, surname, birthday, gender, faculty, degree, course, profile_picture, bio, stuv FROM users WHERE id=?;";
         if($minimal)
             $cmd = "SELECT id, username, name, surname, profile_picture, course, birthday, bio FROM users WHERE id=?;";
 
@@ -74,7 +74,7 @@ class UserController extends BaseController
 
     public function getUserByUsername($username)
     {
-        $result = $this->db->select("SELECT id, username, name, surname, birthday, gender, faculty, degree, course FROM users WHERE username=?;", "s", [$username]);
+        $result = $this->db->select("SELECT id, username, name, surname, birthday, gender, faculty, degree, course, stuv FROM users WHERE username=?;", "s", [$username]);
 
         if($result == false)
             return null;

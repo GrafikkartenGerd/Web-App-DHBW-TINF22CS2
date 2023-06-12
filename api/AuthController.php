@@ -19,7 +19,7 @@ class AuthController extends BaseController
 
     public function login($username, $password)
     {
-        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin from users WHERE username=?", "s", [$username]);
+        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin, stuv from users WHERE username=?", "s", [$username]);
 
         if($result == false)
             return null;
@@ -37,7 +37,7 @@ class AuthController extends BaseController
     }
 
     public function refreshUser($username){
-        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin from users WHERE username=?", "s", [$username]);
+        $result = $this->db->select("SELECT id, username, name, password, surname, birthday, gender, faculty, degree, course, profile_picture, is_admin, stuv from users WHERE username=?", "s", [$username]);
 
         if($result == false)
             return null;

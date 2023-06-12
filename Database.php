@@ -78,5 +78,9 @@ class Database
             throw new Exception($e->getMessage());
         }
     }
+
+    public function insertId(){
+        return $this->connection->insert_id;
+    }
 }
 ?>
