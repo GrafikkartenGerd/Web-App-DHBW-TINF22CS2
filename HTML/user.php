@@ -1,6 +1,20 @@
 <?php
   require "auth.php";
 
+  require_once "../api/UserController.php";
+
+  $uid = $_GET['id'] ?? null;
+
+  if($uid == null)
+    $uid = $_SESSION["user"]["id"];
+
+  $controller = new UserController();
+  $userInfo = $controller->getUserById($uid, true);
+
+  if($userInfo == null){
+    $controller->fail(404);
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,28 +46,22 @@
         <div class="card">
           <div class="row no-gutters">
             <div class="col-md-4">
-              <img src="profile_picture.jpg" class="rounded-circle profile-picture img-fluid" alt="Profile Picture">
+              <img src="<?php echo $userInfo["profile_picture"]?>" class="rounded-circle profile-picture img-fluid" alt="Profile Picture">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h2 class="card-title">John Doe</h2>
+                <h2 class="card-title"><?php echo $userInfo["name"]." ".$userInfo["surname"]?></h2>
                 <div class="row">
                   <div class="col-md-4">
-                    <p><strong>Faculty:</strong> Engineering</p>
-                  </div>
-                  <div class="col-md-4">
-                    <p><strong>Degree:</strong> Computer Science</p>
-                  </div>
-                  <div class="col-md-4">
-                    <p><strong>Course:</strong> Web Development</p>
+                    <p><strong>Course:</strong> <?php echo $userInfo["course"]?></p>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <p><strong>Birthdate:</strong> January 1, 1990</p>
+                    <p><strong>Birthday:</strong> <?php echo $userInfo["birthday"]?></p>
                   </div>
                 </div>
-                <p><strong>Bio:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies sapien at justo ultrices, ut commodo felis semper.</p>
+                <p><strong>Bio:</strong> <?php echo $userInfo["bio"]?></p>
               </div>
             </div>
           </div>

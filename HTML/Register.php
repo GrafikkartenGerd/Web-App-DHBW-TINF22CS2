@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             height: 100%;
             margin: 0;
             background-color: #f8f9fa;
-            overflow: scroll;
+           
         }
 
         .register-container {
@@ -199,6 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
+
     <header class="header">
         <img src="logo.png" alt="Logo">
         <span class="logo-text">CampusConnect</span>

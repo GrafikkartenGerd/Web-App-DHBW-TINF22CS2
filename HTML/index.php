@@ -72,7 +72,7 @@ function populateEventCard(data) {
       <p class="card-text">${event.content}</p>
       <div class="d-flex align-items-center">
         <img src="${user.profile_picture}" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
-        <p class="mb-0 ml-2" style="margin-left:7px">${user.username}</p>
+        <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=${user.id}">${user.username}</a>
       </div>
       <div class="d-flex align-items-center mt-2">
         <i class="far fa-calendar-alt"></i>
