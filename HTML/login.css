@@ -4,6 +4,13 @@ body {
     margin: 0;
     background-color: #f8f9fa;
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+html{
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .login-container {
@@ -93,15 +100,20 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
+main {
+    flex-grow: 1;
+    margin-top: auto;
+  }
 
-.footer {
-    background-color: #f8f9fa;
+footer {
+    background-color: #f2f2f2;
     padding: 20px;
     text-align: center;
-}
+  }
 
-.footer p {
+footer p {
     margin: 0;
+    
 }
 
 .logo-text {

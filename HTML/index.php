@@ -16,6 +16,7 @@ include "auth.php"
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="swipe.css">
   <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="footer.css">
   <!-- Include custom CSS -->
   <style>
     .card {
@@ -33,7 +34,9 @@ include "auth.php"
   <div class="card" id="eventCard" style="display: none;">
   </div>
 </div>
-
+<?php
+    include("footer.php");
+?>
 <canvas id="confetti-canvas"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/confetti-js"></script>
