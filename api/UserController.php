@@ -99,9 +99,9 @@ class UserController extends BaseController
         if(round(filesize($file['tmp_name']) / 1024 / 1024, 1) > 2)
             return "Profile picture is too large (Max 2MB)";
         
-        $uploadDir = '/pfp/';
+        $uploadDir =  realpath('/pfp/');
         $fileName = $uid.".webp";
-        $uploadPath = $uploadDir.$fileName;
+        $uploadPath =$uploadDir.$fileName;
         if(!move_uploaded_file($file['tmp_name'], $uploadPath))
             return "Internal server error.";
 
