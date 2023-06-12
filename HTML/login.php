@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset(
             <div id="alertContainer">
                 <?php
                     if(isset($errorMessage))
-                        echo '<div role="alert" class=alert-danger>'.$errorMessage.'</div>';
+                        echo '<div role="alert" class=alert alert-danger>'.$errorMessage.'</div>';
                 ?>
             </div>
             <h2 class="text-center mb-4">Login</h2>
