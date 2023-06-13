@@ -78,9 +78,7 @@
                 <?php
 
                   if($_SESSION["user"]["id"]==$userInfo["id"]){
-                    echo '<li class="nav-item">
-                    <a class="nav-link" href="../admin/users.php">Admin Panel</a>
-                    </li>';
+                    echo '<a class="btn btn-primary" href="profile.php">Edit</a>';
                   }
                     ?>
                 </div>
