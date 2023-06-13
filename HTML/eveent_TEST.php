@@ -76,7 +76,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">
-    <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
+    <img src="logo.png" alt="Logo CampusConnect" class="navbar-icon">
     Campus Connect
   </a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

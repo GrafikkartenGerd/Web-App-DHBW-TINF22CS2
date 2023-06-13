@@ -18,7 +18,7 @@
   </div>
   <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
     <a class="nav-link" href="../HTML/profile.php">
-      <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
+      <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" alt="Logo CampusConnect" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
     </a>
   </div>
     <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">

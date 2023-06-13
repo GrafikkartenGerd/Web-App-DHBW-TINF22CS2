@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset(
 </head>
 <body>
     <header class="header">
-        <img src="logo.png" alt="Logo">
+        <img src="logo.png" alt="Logo CampusConnect">
         <span>CampusConnect</span>
     </header>
     <main>

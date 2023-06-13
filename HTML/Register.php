@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
     <header class="header">
-        <img src="logo.png" alt="Logo">
+        <img src="logo.png" alt="Logo CampusConnect">
         <span class="logo-text">CampusConnect</span>
     </header>
     <main>
