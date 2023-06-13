@@ -38,7 +38,7 @@
      position: fixed;
      top: 50%;
      left: 50%;
-     transform: translate(-50%, -50%);
+     transform: translate(-25%,-30%);
      z-index: 9999;
      background-color: #fff;
      padding: 10px 20px;
