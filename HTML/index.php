@@ -24,7 +24,7 @@ include "auth.php"
 </head>
 <body>
 <?php
-  include("header.php");
+  include("../api/header.php");
 ?>
 <main>
 <div class="container mt-4">
@@ -34,7 +34,7 @@ include "auth.php"
 </div>
   </main>
 <?php
-    include("footer.php");
+    include("../api/footer.php");
 ?>
 <canvas id="confetti-canvas"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
