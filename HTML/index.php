@@ -14,8 +14,8 @@ include "auth.php"
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="swipe.css">
-  <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="../api/header.css">
+  <link rel="stylesheet" href="../api/footer.css">
   <style>
     .card {
       margin-bottom: 20px;
