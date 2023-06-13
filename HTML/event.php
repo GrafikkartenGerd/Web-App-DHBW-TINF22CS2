@@ -102,7 +102,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 </style>
 </head>
 <body>
-  <?php include("header.php"); ?>
+  <?php include("../api/header.php"); ?>
   <main>
   <div class="container mt-4">
     <div class="row">
