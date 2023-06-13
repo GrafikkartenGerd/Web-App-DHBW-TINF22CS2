@@ -35,6 +35,8 @@ require_once "../api/UserController.php";
 $userController = new UserController();
 
 $eventHost = $userController->getUserById($event["host"]);
+if($eventHost == null)
+  $eventHost = ["username" => "Unknown", "profile_picture" => DEFAULT_PROFILE_PICTURE, "id" => $hostId];
 
 if($participantIds != null){
   foreach ($participantIds as $uid){
