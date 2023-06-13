@@ -5,7 +5,6 @@ include "UserController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-# check if the request is valid and has all parameters
 if (strtoupper($requestMethod) !== 'POST') {
     $this->fail(405);
 }

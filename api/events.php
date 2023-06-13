@@ -6,7 +6,6 @@ include "EventController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-# check if the request is valid and has all parameters
 if (strtoupper($requestMethod) !== 'POST') {
     $this->fail(405);
 }
@@ -14,7 +13,6 @@ if (strtoupper($requestMethod) !== 'POST') {
 
 $filterLevel = $_POST['filter_level'] ?? null;
 
-// check for all required parameters
 if ($filterLevel === null) {
     failWithCode(400);
 }

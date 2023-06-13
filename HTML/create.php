@@ -52,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Create Event - CampusConnect</title>
   <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="../api/header.css">
+  <link rel="stylesheet" href="../api/footer.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <?php
-  include "header.php";
+  include "../api/header.php";
 ?>
 
 <main>
@@ -98,10 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label for="eventContent" class="form-label">Event Content</label>
           <textarea class="form-control" id="eventContent" rows="3" name="content" placeholder="Enter event content" required></textarea>
         </div>
-        <div class="mb-3">
-          <label for="eventPoster" class="form-label">Event Poster</label>
-          <input type="file" class="form-control" id="eventPoster" accept="image/*" required>
-        </div>
         <button type="submit" class="btn btn-primary">Create</button>
       </form>
     </div>
@@ -110,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </main>
 
 <?php
-  include("footer.php");
+  include("../api/footer.php");
 ?>
 <!-- Include Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>

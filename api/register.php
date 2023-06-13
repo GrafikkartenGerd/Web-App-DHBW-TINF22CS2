@@ -5,7 +5,6 @@ include "AuthController.php";
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-# check if the request is valid and has all parameters
 if (strtoupper($requestMethod) !== 'POST') {
     failWithCode(405);
 }
@@ -21,7 +20,6 @@ $faculty = $_POST['faculty'] ?? null;
 $degree = $_POST['degree'] ?? null;
 $course = $_POST['course'] ?? null;
 
-// check for all required parameters
 if (
     $username === null ||
     $password === null ||
