@@ -62,17 +62,22 @@ class EventController extends BaseController
     private function getFilterSuffix($user, $filter_level){
         switch($filter_level){
             case "upcoming":
-                break;
+                return " WHERE date > NOW() ORDER BY date ASC";
             case "today":
-                break;
+                $today = date('Y-m-d');
+                return " WHERE DATE_FORMAT(date_column, '%Y-%m-%d') = '$today' ORDER BY date ASC";
             case "next":
-                break;
+                return " WHERE date > NOW() ORDER BY date ASC LIMIT 1";
             case "past":
+                return " WHERE date < NOW() ORDER BY date DESC LIMIT 100";
                 break;
             case "declined":
-                break;
+                return " WHERE declined LIKE '%,".$user["id"].",%' OR declined LIKE '%,".$user["id"]."' ORDER BY date ASC";
             case "joined":
-                break;// TODO
+                return " WHERE accepted LIKE '%,".$user["id"].",%' OR accepted LIKE '%,".$user["id"]."' ORDER BY date ASC";
+            default:
+                return "";
+                break;
         }
     }
 
