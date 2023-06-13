@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="../HTML/index.php">
     <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
-    <link rel="icon" type="image/x-icon" href="/html/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/HTML/favicon.ico">
     <span class="header">CampusConnect</span>
   </a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
