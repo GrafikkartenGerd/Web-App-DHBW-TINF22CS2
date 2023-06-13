@@ -20,14 +20,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="../api/header.css">
   <title>CampusConnect Admin - Events</title>
 </head>
 
 <body>
 
 <?php
-  include "header.php";
+  include "../api/header.php";
 ?>
 
   <div class="container mt-4">
