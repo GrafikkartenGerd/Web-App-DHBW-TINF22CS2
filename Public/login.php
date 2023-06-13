@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset(
         </div>
     </main>
 <?php
-    include("../Private/footer.php");
+    include("../private/footer.php");
 ?>
 </body>
 </html>

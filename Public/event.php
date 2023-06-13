@@ -25,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $controller->userAcceptEvent($event, $_SESSION["user"]["id"]);
         else
           $controller->userDeclineEvent($event, $_SESSION["user"]["id"]);
+        
+      http_response_code(200);
+      echo(json_encode(["status" => true]));   // assuming it doesnt matter if this fails
   } 
   else if($delete != null){
       $_delete = filter_var($delete, FILTER_VALIDATE_BOOLEAN);
@@ -213,7 +216,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 
   function changeEventStatus(accept){
     $.post('event.php?id=' + window.eventId, { accept: accept }, function(response) {
-      location.reload();
+      window.location.reload();
       });
   }
 

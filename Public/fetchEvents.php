@@ -2,8 +2,8 @@
 
 include "auth.php";
 
-require_once("../Private/UserController.php");
-require_once("../Private/EventController.php");
+require_once("../private/UserController.php");
+require_once("../private/EventController.php");
 
 header('Content-type: application/json');
 
