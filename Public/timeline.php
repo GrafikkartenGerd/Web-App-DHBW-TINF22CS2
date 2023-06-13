@@ -71,7 +71,7 @@ include "auth.php"
 <body>
 
 <?php
-  include("../api/header.php");
+  include("../Private/header.php");
 ?>
 <main>
 <div class="container mt-4">
@@ -163,7 +163,7 @@ include "auth.php"
   changeScope('upcoming');
 </script>
 <?php
-  include("../api/footer.php")
+  include("../Private/footer.php")
 ?>
 </body>
 </html>

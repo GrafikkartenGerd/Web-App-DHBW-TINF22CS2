@@ -1,8 +1,8 @@
 <?php
   require "auth.php";
 
-  require_once "../api/UserController.php";
-  require_once "../api/EventController.php";
+  require_once "../Private/UserController.php";
+  require_once "../Private/EventController.php";
 
   $uid = $_GET['id'] ?? null;
 
@@ -48,7 +48,7 @@
 <body>
 
 <?php
-  include "../api/header.php";
+  include "../Private/header.php";
 ?>
 <main>
   <div class="container mt-4">
@@ -117,7 +117,7 @@
   </div>
   </main>
   <?php
-    include("../api/footer.php")
+    include("../Private/footer.php")
   ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

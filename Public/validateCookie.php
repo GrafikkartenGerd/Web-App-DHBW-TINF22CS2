@@ -1,5 +1,5 @@
 <?php 
-require_once "../api/AuthController.php";
+require_once "../Private/AuthController.php";
 
 function clearAuthCookie() {
     if (isset($_COOKIE["user"])) {

@@ -7,7 +7,7 @@ if(!isset($_GET["username"])){
     exit;
 }
 
-require_once "../api/UserController.php";
+require_once "../Private/UserController.php";
 
 $username = $_GET['username'];
 $controller = new UserController();

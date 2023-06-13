@@ -1,6 +1,6 @@
 <?php
 include "auth.php";
-require_once "../api/EventController.php";
+require_once "../Private/EventController.php";
 
 $controller = new EventController();
 
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $participantIds = $controller->getParticipants($event);
 $participants = [];
 
-require_once "../api/UserController.php";
+require_once "../Private/UserController.php";
 $userController = new UserController();
 
 $eventHost = $userController->getUserById($event["host"]);
@@ -104,7 +104,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 </style>
 </head>
 <body>
-  <?php include("../api/header.php"); ?>
+  <?php include("../Private/header.php"); ?>
   <main>
   <div class="container mt-4">
     <div class="row">
@@ -183,7 +183,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 </script>
 
 <?php
-  include("../api/footer.php");
+  include("../Private/footer.php");
 ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -1,8 +1,8 @@
 <?php
 
 require "auth.php";
-require_once("../api/UserController.php");
-require_once("../api/EventController.php");
+require_once("../Private/UserController.php");
+require_once("../Private/EventController.php");
 
 header('Content-type: application/json');
 $action = $_GET['action'];
