@@ -46,12 +46,18 @@ include "auth.php"
 
 <script>
 function fetchNextEvent() {
-  $.get('fetchEvent.php')
+  $.get('fetchEvents.php?filter=next')
     .done(function(response) {
-      if(response.success)
-        populateEventCard(response);
-      else
-        showAlert("Failed to get events: " + response.reason, "danger");
+      if(response.success){
+        var nextEvent = response.events[0];
+        populateEventCard(nextEvent);
+      }
+      else{
+        if(response.reason.includes("No events available"))
+          showAlert("There are no events available for you right now, please return later :)", "success");
+        else
+          showAlert("Failed to get events: " + response.reason, "danger");
+      }
     })
     .fail(function() {
       showAlert("Failed to get events!", "danger");
@@ -59,11 +65,10 @@ function fetchNextEvent() {
 }
 
 // Function to populate the event card with data
-function populateEventCard(data) {
+function populateEventCard(event) {
   var eventCard = document.getElementById('eventCard');
-  var event = data.event;
   window.event = event;
-  var user = data.host;
+  var user = event.host;
   // Update the card content with the retrieved data
   eventCard.innerHTML = `
     <div class="card-body">
