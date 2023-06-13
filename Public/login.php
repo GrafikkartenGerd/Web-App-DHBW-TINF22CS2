@@ -9,7 +9,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 $cookie_login = require_once("validateCookie.php");
 
 if($cookie_login){
-    require_once "../api/AuthController.php";
+    require_once "../Private/AuthController.php";
 
     $username = $_COOKIE["user"];
     $controller = new AuthController();
@@ -25,7 +25,7 @@ if($cookie_login){
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset($_POST["password"])) {
   
-    require_once "../api/AuthController.php";
+    require_once "../Private/AuthController.php";
 
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -114,12 +114,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset(
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
-                <p class="text-center register-link">Don't have an account? <a href="register.php">Register</a></p>
+                <div><p class="text-center register-link">Don't have an account? <a href="register.php">Register</a>
+                    <div class="text-center email-link">Forgot Password? <a href="mailto:support@campusconnect.de">Send an Email</a></div></p>
+                </div>
             </form>
         </div>
     </main>
 <?php
-    include("../api/footer.php");
+    include("../Private/footer.php");
 ?>
 </body>
 </html>

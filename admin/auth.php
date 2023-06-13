@@ -4,7 +4,7 @@ session_start();
 
 if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
 
-  require_once "../api/AuthController.php";
+  require_once "../Private/AuthController.php";
   $controller = new AuthController();
   $result = $controller->refreshUser($_SESSION["user"]["username"]);
 
@@ -22,7 +22,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
 
 if($_SESSION["is_admin"] !== true){
   session_destroy();
-  header("Location: ../HTML/login.php");
+  header("Location: ../Public/login.php");
   exit;
 }
 ?>

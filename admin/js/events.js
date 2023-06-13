@@ -8,7 +8,7 @@ function populateEventList(events){
      var row = $("<tr>");
 
      var eventNameCell = $('<td>')
-     var eventLink = $('<a>').attr('href', '../HTML/event.php?id=' + event.id).text(event.name);
+     var eventLink = $('<a>').attr('href', '../Public/event.php?id=' + event.id).text(event.name);
      eventNameCell.append(eventLink);
 
      eventNameCell.appendTo(row);

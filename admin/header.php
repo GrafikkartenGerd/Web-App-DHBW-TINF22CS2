@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="../HTML/index.php">
+  <a class="navbar-brand" href="../Public/index.php">
     <img src="logo.png" alt="Campus Connect Icon" class="navbar-icon">
-    <link rel="icon" type="image/x-icon" href="/html/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/Public/favicon.ico">
     <span class="header">CampusConnect</span>
   </a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,12 +18,12 @@
     </ul>
   </div>
   <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
-    <a class="nav-link" href="../HTML/profile.php">
+    <a class="nav-link" href="../Public/profile.php">
       <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" alt="Logo CampusConnect" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
     </a>
   </div>
     <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
-     <a class="nav-link fa fa-sign-out" href="../HTML/logout.php" style="font-size:30px; margin-right:10px"></a>
+     <a class="nav-link fa fa-sign-out" href="../Public/logout.php" style="font-size:30px; margin-right:10px"></a>
   </div>
 </nav>
 

@@ -95,7 +95,7 @@ foreach ($events as &$event) {
 <body>
 
 <?php
-  include("../api/header.php");
+  include("../Private/header.php");
 ?>
 <main>
 <div class="container mt-4">
@@ -170,7 +170,7 @@ foreach ($events as &$event) {
 
 </script>
 <?php
-  include("../api/footer.php")
+  include("../Private/footer.php")
 ?>
 </body>
 </html>
