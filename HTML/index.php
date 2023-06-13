@@ -9,7 +9,6 @@ include "auth.php"
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CampusConnect</title>
-  <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
@@ -17,7 +16,6 @@ include "auth.php"
   <link rel="stylesheet" href="swipe.css">
   <link rel="stylesheet" href="header.css">
   <link rel="stylesheet" href="footer.css">
-  <!-- Include custom CSS -->
   <style>
     .card {
       margin-bottom: 20px;
@@ -26,7 +24,7 @@ include "auth.php"
 </head>
 <body>
 <?php
-  include("header.php");
+  include("../api/header.php");
 ?>
 <main>
 <div class="container mt-4">
@@ -36,7 +34,7 @@ include "auth.php"
 </div>
   </main>
 <?php
-    include("footer.php");
+    include("../api/footer.php");
 ?>
 <canvas id="confetti-canvas"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>

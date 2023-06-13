@@ -50,7 +50,11 @@ mc.on('panend', function (e)
 function explodeCard()
 {
     $(eventCard).hide("explode", { pieces: 5 }, 150);
+    var audio = new Audio('nope.mp3');
+    audio.play();
+
 }
+
 
 function showConfirmation()
 {
