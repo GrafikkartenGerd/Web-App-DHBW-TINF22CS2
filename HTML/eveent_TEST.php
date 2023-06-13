@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Timeline</title>
-  <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <!-- Include custom CSS -->
   <style>
     .navbar-icon {
       width: 55px;
@@ -236,10 +234,10 @@
         });
         break;
       case 'liked':
-        // Placeholder for liked events filtering
+        
         break;
       case 'disliked':
-        // Placeholder for disliked events filtering
+      
         break;
       default:
         filteredEvents = exampleEvents;
@@ -248,7 +246,6 @@
     displayEvents(filteredEvents);
   }
 
-  // Initial display
   changeScope('upcoming');
 </script>
 </body>
