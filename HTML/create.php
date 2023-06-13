@@ -98,10 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label for="eventContent" class="form-label">Event Content</label>
           <textarea class="form-control" id="eventContent" rows="3" name="content" placeholder="Enter event content" required></textarea>
         </div>
-        <div class="mb-3">
-          <label for="eventPoster" class="form-label">Event Poster</label>
-          <input type="file" class="form-control" id="eventPoster" accept="image/*" required>
-        </div>
         <button type="submit" class="btn btn-primary">Create</button>
       </form>
     </div>
