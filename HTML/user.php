@@ -75,9 +75,15 @@
                 </div>
                 <p><strong>Bio:</strong> <?php echo $userInfo["bio"]?></p>
                 <div class="d-flex justify-content-end">
-                  <a class="btn btn-primary" href="profile.php">Edit Profile</a>
-                </div>
+                <?php
 
+                  if($_SESSION["user"]["id"]==$userInfo["id"]){
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="../admin/users.php">Admin Panel</a>
+                    </li>';
+                  }
+                    ?>
+                </div>
               </div>
             </div>
           </div>
