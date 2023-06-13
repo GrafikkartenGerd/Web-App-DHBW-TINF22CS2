@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($dateTime !== false) {
         
-          require_once "../Private/EventController.php";
+          require_once "../private/EventController.php";
 
           $controller = new EventController();
           $result = $controller->createEvent($eventName, $dateTime, $eventPlace, $eventContent, $_SESSION["user"]["faculty"], $_SESSION["user"]["degree"], $_SESSION["user"]["course"], $_SESSION["user"]["stuv"], $_SESSION["user"]["id"]);
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <?php
-  include "../Private/header.php";
+  include "../private/header.php";
 ?>
 
 <main>
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </main>
 
 <?php
-  include("../Private/footer.php");
+  include("../private/footer.php");
 ?>
 <!-- Include Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>

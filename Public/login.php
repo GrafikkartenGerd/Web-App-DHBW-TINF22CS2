@@ -6,10 +6,10 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
     exit;
 }
 
-$cookie_login = require_once("validateCookie.php");
+$cookie_login = require_once("../private/validateCookie.php");
 
 if($cookie_login){
-    require_once "../Private/AuthController.php";
+    require_once "../private/AuthController.php";
 
     $username = $_COOKIE["user"];
     $controller = new AuthController();
@@ -25,7 +25,7 @@ if($cookie_login){
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset($_POST["password"])) {
   
-    require_once "../Private/AuthController.php";
+    require_once "../private/AuthController.php";
 
     $username = $_POST['username'];
     $password = $_POST['password'];

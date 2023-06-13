@@ -1,5 +1,5 @@
 <?php 
-require_once "../Private/AuthController.php";
+require_once "AuthController.php";
 
 function clearAuthCookie() {
     if (isset($_COOKIE["user"])) {

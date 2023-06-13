@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="index.php">
     <img src="logo.png" alt="Logo CampusConnect" class="navbar-icon">
-    <link rel="icon" type="image/x-icon" href="/Public/favicon.ico">
     <span class="header">CampusConnect</span>
   </a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,14 +20,14 @@
       <?php
         if($_SESSION["is_admin"])
           echo '<li class="nav-item">
-                  <a class="nav-link" href="../admin/users.php">Admin Panel</a>
+                  <a class="nav-link" href="admin/users.php">Admin Panel</a>
                 </li>'
       ?>
     </ul>
   </div>
   <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">
     <a class="nav-link" href="user.php">
-      <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" alt="Profile picture" class="rounded-circle" style="width: 55px; padding-left:10px; padding-right:10px">
+      <img src="<?php echo $_SESSION["user"]["profile_picture"];?>" alt="Profile picture" class="rounded-circle" style="width: 45px; height:45px; object-fit:cover;">
     </a>
   </div>
     <div class="navbar-nav ml-auto pr-2 d-none d-lg-block">

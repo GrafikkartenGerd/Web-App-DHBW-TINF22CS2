@@ -6,10 +6,10 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
     exit;
 }
 
-$cookie_login = require_once("validateCookie.php");
+$cookie_login = require_once("../private/validateCookie.php");
 
 if($cookie_login){
-    require_once "../Private/AuthController.php";
+    require_once "../private/AuthController.php";
 
     $username = $_COOKIE["user"];
     $controller = new AuthController();
@@ -25,7 +25,7 @@ if($cookie_login){
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    require_once "../Private/AuthController.php";
+    require_once "../private/AuthController.php";
 
     $username = $_POST['username'] ?? null;
     $name = $_POST['name'] ?? null;
@@ -232,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <select name="gender" class="form-control" value="Male">
                         <option>Male</option>
                         <option>Female</option>
-                        <?php include("genders.php"); ?>
+                        <?php include("../private/genders.php"); ?>
                     </select>
                 </div>
                 <div class="form-group">

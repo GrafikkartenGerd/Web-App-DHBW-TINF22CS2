@@ -5,8 +5,8 @@ include "auth.php";
 $scope = $_GET['scope'] ?? null;
 if($scope == null) $scope = "upcoming";
 
-require_once "../api/EventController.php";
-require_once "../api/UserController.php";
+require_once "../private/EventController.php";
+require_once "../private/UserController.php";
 
 $controller = new EventController();
 $events = $controller->getEventsFiltered($_SESSION["user"], $scope);
@@ -95,7 +95,7 @@ foreach ($events as &$event) {
 <body>
 
 <?php
-  include("../Private/header.php");
+  include("../private/header.php");
 ?>
 <main>
 <div class="container mt-4">
@@ -170,7 +170,7 @@ foreach ($events as &$event) {
 
 </script>
 <?php
-  include("../Private/footer.php")
+  include("../private/footer.php")
 ?>
 </body>
 </html>

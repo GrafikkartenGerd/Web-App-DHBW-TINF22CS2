@@ -7,7 +7,7 @@
     users.forEach(function(user) {
       var row = $('<tr>');
       var usernameCell = $('<td>');
-      var usernameLink = $('<a>').attr('href', '../Public/user.php?id=' + user.id).text(user.username);
+      var usernameLink = $('<a>').attr('href', '../user.php?id=' + user.id).text(user.username);
       usernameCell.append(usernameLink);
       var nameCell = $('<td>').text(user.name + " " + user.surname);
       var courseCell = $('<td>').text(user.course);

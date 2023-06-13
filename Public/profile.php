@@ -8,7 +8,7 @@ $action = $_GET['do'] ?? null;
 
 if($action !== null){
 
-  require_once "../Private/UserController.php";
+  require_once "../private/UserController.php";
 
   $controller = new UserController();
 
@@ -220,7 +220,7 @@ if($action !== null){
 <body>
 
 <?php
-  include "../Private/header.php";
+  include "../private/header.php";
 ?>
 
 <main>
@@ -307,7 +307,7 @@ if($action !== null){
 </main>
 
 <?php
-  include "../Private/footer.php";
+  include "../private/footer.php";
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

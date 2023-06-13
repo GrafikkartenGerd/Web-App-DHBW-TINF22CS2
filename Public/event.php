@@ -1,6 +1,6 @@
 <?php
 include "auth.php";
-require_once "../Private/EventController.php";
+require_once "../private/EventController.php";
 
 $controller = new EventController();
 
@@ -14,16 +14,35 @@ if($event == null)
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  $accept = $_POST['accept'] ?? null;
-  if($accept == null)
-    exit;
+  header('Content-type: application/json');
 
-  $_accept = filter_var($accept, FILTER_VALIDATE_BOOLEAN);
-  
-  if($_accept == true)
-    $controller->userAcceptEvent($event, $_SESSION["user"]["id"]);
-  else
-    $controller->userDeclineEvent($event, $_SESSION["user"]["id"]);
+  $accept = $_POST['accept'] ?? null;
+  $delete = $_POST['delete'] ?? null;
+  if($accept != null){
+
+      $_accept = filter_var($accept, FILTER_VALIDATE_BOOLEAN);
+      if($_accept == true)
+          $controller->userAcceptEvent($event, $_SESSION["user"]["id"]);
+        else
+          $controller->userDeclineEvent($event, $_SESSION["user"]["id"]);
+  } 
+  else if($delete != null){
+      $_delete = filter_var($delete, FILTER_VALIDATE_BOOLEAN);
+      if($delete){
+
+        if($_SESSION["user"]["id"] == $event["host"]){
+          $success = $controller->deleteEvent($event["id"]);
+
+          if($success == false)
+            echo(json_encode(["status" => false, "reason" => "Internal server error."]));
+          else
+            echo(json_encode(["status" => true]));          
+        }else{
+          echo(json_encode(["status" => false, "reason" => "User does not match host."]));
+        }
+      }
+
+  }
 
   exit;
 }
@@ -31,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $participantIds = $controller->getParticipants($event);
 $participants = [];
 
-require_once "../Private/UserController.php";
+require_once "../private/UserController.php";
 $userController = new UserController();
 
 $eventHost = $userController->getUserById($event["host"]);
@@ -61,6 +80,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+  <script src="util.js"></script>
   <link rel="stylesheet" href="header.css">
   <link rel="stylesheet" href="footer.css">
   <style>
@@ -104,9 +124,10 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 </style>
 </head>
 <body>
-  <?php include("../Private/header.php"); ?>
+  <?php include("../private/header.php"); ?>
   <main>
   <div class="container mt-4">
+    <div id="alertContainer"></div>
     <div class="row">
       <div class="col">
         <?php if (isset($event)): ?>
@@ -125,6 +146,11 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
             <i class="fas fa-map-marker-alt"></i>
             <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event['place']; ?></p>
         </div>
+          <?php
+            if($_SESSION["user"]["id"] == $event["host"]){
+              echo '<button class="btn btn-danger" type="button" style="margin-top:10px" onclick="deleteEvent('.$event["id"].')">Delete Event</button>';
+            }
+          ?>
         <?php if ($event["host"] != $_SESSION["user"]["id"]): ?>
         <div style="margin-top:10px">
           <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" <?php if($participationStatus == 1) echo "checked"?> onclick="changeEventStatus(true);">
@@ -174,6 +200,17 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
     navigator.clipboard.writeText(window.location.href);
   }
 
+  <?php if($_SESSION["user"]["id"] == $event["host"]): ?>
+    function deleteEvent(id){
+       $.post('event.php?id=' + id, { delete: true }, function(response) {
+          if(!response.status)
+            showAlert(response.reason, "danger");
+          else
+            window.location.href = "index.php";
+      });
+    }
+  <?php endif; ?>
+
   function changeEventStatus(accept){
     $.post('event.php?id=' + window.eventId, { accept: accept }, function(response) {
       location.reload();
@@ -183,7 +220,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 </script>
 
 <?php
-  include("../Private/footer.php");
+  include("../private/footer.php");
 ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

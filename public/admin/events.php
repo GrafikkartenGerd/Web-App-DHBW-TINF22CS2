@@ -1,7 +1,7 @@
 <?php
   require "auth.php";
-  require_once "../Private/UserController.php";
-  require_once "../Private/EventController.php";
+  require_once "../../private/UserController.php";
+  require_once "../../private/EventController.php";
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
 <body>
 
 <?php
-  include "header.php";
+  include "../../private/admin_header.php";
 ?>
 
   <div class="container mt-4">

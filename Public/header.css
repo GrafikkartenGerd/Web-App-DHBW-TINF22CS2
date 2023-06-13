@@ -18,6 +18,13 @@
      font-weight: bold;
  }
 
+ .profile-picture {
+     width: 250px;
+     height: 250px;
+     padding: 12px;
+     object-fit: cover;
+ }
+
 @media (max-width: 991.98px) {
      .navbar-toggler {
          margin-left: auto !important;

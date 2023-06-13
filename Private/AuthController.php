@@ -1,7 +1,7 @@
 <?php
 
 require_once "BaseController.php";
-require_once "../Database.php";
+require_once "Database.php";
 
 class AuthController extends BaseController
 {
@@ -105,7 +105,7 @@ class AuthController extends BaseController
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $authToken = bin2hex(random_bytes(32));
 
-        return $this->db->exec("INSERT INTO users (username, name, surname, password, birthday, gender, matriculation_number, faculty, degree, course, token, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);" , "ssssssisssss", [$username, $name, $surname, $hashedPassword, $birthday->format("Y-m-d"), $gender, $matriculation_number, $faculty, $degree, $course, $authToken, "../pfp/default.jpg"]);
+        return $this->db->exec("INSERT INTO users (username, name, surname, password, birthday, gender, matriculation_number, faculty, degree, course, token, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);" , "ssssssisssss", [$username, $name, $surname, $hashedPassword, $birthday->format("Y-m-d"), $gender, $matriculation_number, $faculty, $degree, $course, $authToken, "pfp/default.jpg"]);
     }
 }
 ?>

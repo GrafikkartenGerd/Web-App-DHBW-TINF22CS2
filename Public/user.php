@@ -1,8 +1,8 @@
 <?php
   require "auth.php";
 
-  require_once "../Private/UserController.php";
-  require_once "../Private/EventController.php";
+  require_once "../private/UserController.php";
+  require_once "../private/EventController.php";
 
   $uid = $_GET['id'] ?? null;
 
@@ -34,9 +34,10 @@
   <link rel="stylesheet" href="footer.css">
   <style>
     .profile-picture {
-      width: 200px;
-      height: auto;
+      width: 250px;
+      height: 250px;
       padding: 12px;
+      object-fit: cover;
     }
 
     .card {
@@ -48,7 +49,7 @@
 <body>
 
 <?php
-  include "../Private/header.php";
+  include "../private/header.php";
 ?>
 <main>
   <div class="container mt-4">
@@ -78,7 +79,7 @@
                 <?php
 
                   if($_SESSION["user"]["id"]==$userInfo["id"]){
-                    echo '<a class="btn btn-primary" href="profile.php">Edit</a>';
+                    echo '<a class="btn btn-primary" href="profile.php">Edit Profile</a>';
                   }
                     ?>
                 </div>
@@ -117,7 +118,7 @@
   </div>
   </main>
   <?php
-    include("../Private/footer.php")
+    include("../private/footer.php")
   ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

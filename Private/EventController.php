@@ -1,7 +1,7 @@
 <?php
 
 require_once "BaseController.php";
-require_once "../Database.php";
+require_once "Database.php";
 
 class EventController extends BaseController
 {

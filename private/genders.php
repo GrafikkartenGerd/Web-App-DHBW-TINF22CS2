@@ -6,6 +6,7 @@
 <option>Agender</option>
 <option>Aic</option>
 <option>Androgyne</option>
+<option>Apache attack helicopter</option>
 <option>Apogender</option>
 <option>Astronomique</option>
 <option>Azurgirl</option>
@@ -142,6 +143,7 @@
 <option>Nonbinaryflux</option>
 <option>Nonvirmina</option>
 <option>Non-binary</option>
+<option>Nuclear Warhead</option>
 <option>Offgender</option>
 <option>Omnixeno</option>
 <option>Orientationgender</option>
