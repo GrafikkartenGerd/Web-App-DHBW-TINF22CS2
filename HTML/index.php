@@ -15,8 +15,8 @@ include "auth.php"
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="swipe.css">
-  <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="../api/header.css">
+  <link rel="stylesheet" href="../api/footer.css">
   <!-- Include custom CSS -->
   <style>
     .card {
@@ -26,7 +26,7 @@ include "auth.php"
 </head>
 <body>
 <?php
-  include("header.php");
+  include("../api/header.php");
 ?>
 <main>
 <div class="container mt-4">
@@ -36,7 +36,7 @@ include "auth.php"
 </div>
   </main>
 <?php
-    include("footer.php");
+    include("../api/footer.php");
 ?>
 <canvas id="confetti-canvas"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
