@@ -86,6 +86,10 @@ function populateEventCard(event) {
         <i class="fas fa-map-marker-alt"></i>
         <p class="mb-0 ml-2" style="margin-left:7px">${event.place}</p>
       </div>
+      <div class="d-flex align-items-center">
+        <i class="fas fa-user"></i>
+        <p class="mb-0 ml-2" style="margin-left:7px">Participants: ${event.participant_count}</p>
+      </div>
     </div>
   `;
 
