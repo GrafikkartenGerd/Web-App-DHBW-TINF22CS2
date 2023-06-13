@@ -8,6 +8,21 @@ header('Content-type: application/json');
 $action = $_GET['action'];
 
 // Handle the search users action
+if ($action === 'searchEvent') {
+  $query = $_GET['query'];
+
+  $controller = new EventController();
+  $result = $controller->searchEvents($query);
+
+  if($result == null)
+      echo json_encode(['success' => false]);
+  else
+      echo json_encode(['success' => true, 'events' => $result]);
+
+  exit;
+}
+
+// Handle the search users action
 if ($action === 'searchUsers') {
     $query = $_GET['query'];
 
@@ -31,6 +46,14 @@ if ($action === 'deleteUser') {
   if($user == null){
     echo json_encode(['success' => false, 'reason' => "User not found!"]);
     exit;
+  }
+
+  $eventController = new EventController();
+  $userEvents = $eventController->getEventsByUser($user["id"]);
+
+  foreach($userEvents as $event){
+    // This could be done in a single DB query but whatever
+    $eventController->deleteEvent($event["id"]);
   }
 
   $result = $controller->deleteUser($user["id"]);
@@ -79,7 +102,7 @@ if ($action === 'getEventList') {
 
     $controller = new EventController();
     $userController = new UserController();
-    $events = $controller->getEventsforUser(null, "all");
+    $events = $controller->searchEvents("");
     
     foreach ($events as &$event) {
         $hostId = $event['host']; // Assuming 'host' is the key for the host ID in the event array

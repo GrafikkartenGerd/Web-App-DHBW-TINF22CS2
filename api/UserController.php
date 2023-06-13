@@ -105,12 +105,16 @@ class UserController extends BaseController
             return "Profile picture is too large (Max 2MB)";
         
         $uploadDir =  "../pfp";
-        $fileName = "/".$uid.".webp";
+        $fileName = "/".$uid."-".bin2hex(random_bytes(8)).".webp"; // we do this to update the cache when the image changes
         $uploadPath = $uploadDir.$fileName;
         if(!move_uploaded_file($file['tmp_name'], $uploadPath))
             return "Internal server error.";
 
         $result = $this->db->exec("UPDATE users SET profile_picture=? WHERE id=?", "si", [$uploadPath, $uid]);
+
+        $currentPicture = $_SESSION["user"]["profile_picture"];
+        if($currentPicture != DEFAULT_PROFILE_PICTURE)
+            unlink($_SESSION["user"]["profile_picture"]);
 
         return $result;
     }

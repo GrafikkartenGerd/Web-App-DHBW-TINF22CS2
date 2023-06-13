@@ -1,9 +1,13 @@
 <?php
-define("DB_HOST", "62.171.166.53");
-define("DB_USERNAME", "dhbw2");
-define("DB_PASSWORD", "campusconnect69420");
-define("DB_DATABASE_NAME", "dhbwsv");
-define("PASSWORD_LENGTH", 8);
+$config = parse_ini_file('config.ini');
 
-$cookie_expiration_delay = (30 * 24 * 60 * 60);
+define('DB_HOST', $config['DB_HOST']);
+define('DB_USERNAME', $config['DB_USERNAME']);
+define('DB_PASSWORD', $config['DB_PASSWORD']);
+define('DB_DATABASE_NAME', $config['DB_DATABASE_NAME']);
+define('PASSWORD_LENGTH', $config['PASSWORD_LENGTH']);
+define('DEFAULT_PROFILE_PICTURE', $config["DEFAULT_PROFILE_PICTURE"]);
+
+$cookie_expiration_delay = $config['cookie_expiration_delay'];
+
 ?>

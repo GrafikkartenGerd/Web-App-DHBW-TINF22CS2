@@ -11,7 +11,7 @@ $userController = new UserController();
 $userAccount = $_SESSION["user"];
 
 $eventController = new EventController();
-$events = $eventController->getEventsforUser($userAccount, "all");
+$events = $eventController->getEventsFiltered($userAccount, $TODO);
 
 if($events == null){
     echo json_encode(['success' => false, 'reason' => "Unable to query events!"]);

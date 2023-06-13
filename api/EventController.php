@@ -33,6 +33,18 @@ class EventController extends BaseController
         return $result;   
     }
 
+    public function searchEvents($query){
+        $query = '%'.$query.'%';
+        $result = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE name LIKE ? OR place LIKE ? OR content LIKE ? ORDER BY date ASC;", "sss", [$query, $query, $query]);
+
+        if($result == false)
+            return null;
+            
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
     public function getEventById($eid){
         $result = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE id=?;", "i", [$eid]);
 
@@ -47,13 +59,31 @@ class EventController extends BaseController
         return $result[0];
     }
 
-    public function getEventsforUser($user, $filter_level)
+    private function getFilterSuffix($user, $filter_level){
+        switch($filter_level){
+            case "upcoming":
+                break;
+            case "today":
+                break;
+            case "next":
+                break;
+            case "past":
+                break;
+            case "declined":
+                break;
+            case "joined":
+                break;// TODO
+        }
+    }
+
+    public function getEventsFiltered($user, $filter_level, $limit = true)
     {
+        $limitCmd = $limit ? " LIMIT 100" : "";
         if($filter_level != "all"){
             $filterParam = $user[$filter_level];
-            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE ".$filter_level."=? AND date > NOW() ORDER BY date ASC LIMIT 100;", "s", [$filterParam]);
+            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events FROM events WHERE ".$filter_level."=? ORDER BY date ASC".$limitCmd, "s", [$filterParam]);
         }else{
-            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE date > NOW() ORDER BY date ASC LIMIT 100;", "", []);
+            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events ORDER BY date ASC".$limitCmd, "", []);
         }
         
         if($events == false)
@@ -64,8 +94,9 @@ class EventController extends BaseController
         return $events;
     }
 
-    public function getEventsByUser($uid){
-        $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE date > NOW() AND host=? ORDER BY date DESC LIMIT 100;", "i", [$uid]);
+    public function getEventsByUser($uid, $limit = true){
+        $limitCmd = $limit ? " LIMIT 100" : "";
+        $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events WHERE host=? ORDER BY date".$limitCmd, "i", [$uid]);
     
         if($events == false)
         return null;

@@ -24,8 +24,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Profile</title>
+  <title><?php echo $userInfo["username"]; ?> - CampusConnect</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -61,6 +62,7 @@
             <div class="col-md-8">
               <div class="card-body">
                 <h2 class="card-title"><?php echo $userInfo["name"]." ".$userInfo["surname"]?></h2>
+                <p><?php echo $userInfo["username"]?></p>
                 <div class="row">
                   <div class="col-md-4">
                     <p><strong>Course:</strong> <?php echo $userInfo["course"]?></p>
@@ -72,6 +74,10 @@
                   </div>
                 </div>
                 <p><strong>Bio:</strong> <?php echo $userInfo["bio"]?></p>
+                <div class="d-flex justify-content-end">
+                  <a class="btn btn-primary" href="profile.php">Edit Profile</a>
+                </div>
+
               </div>
             </div>
           </div>
@@ -102,8 +108,7 @@
           </div>
         </div>
         <?php endforeach; ?>
-        
-      </div>
+        </div>
     </div>
   </div>
   </main>

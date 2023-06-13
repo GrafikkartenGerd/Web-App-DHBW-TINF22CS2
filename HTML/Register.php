@@ -91,8 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>CampusConnect - Register</title>
-    <meta name="description" content="Register">
-    <link rel="stylesheet" type="text/css" href="swipecss.css" media="screen">  
+    <meta name="description" content="CampusConnect Registration">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -232,6 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <select name="gender" class="form-control" value="Male">
                         <option>Male</option>
                         <option>Female</option>
+                        <?php include("genders.php"); ?>
                     </select>
                 </div>
                 <div class="form-group">
@@ -255,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" class="form-control" id="course" name="course" placeholder="Enter course" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
-                <p class="text-center login-link">Already have an account? <a href="login.php">Login</a></p>
+                <p class="text-center">Already have an account? <a href="login.php">Login</a></p>
             </form>
         </div>
     </main>

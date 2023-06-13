@@ -33,7 +33,7 @@ if($profileResult == null)
     failWithCode(401);
 
 $eventController = new EventController();
-$eventsResult = $eventController->getEventsforUser($profileResult, $filterLevel);
+$eventsResult = $eventController->getEventsFiltered($user, $filterLevel); // deprecated
 
 if ($eventsResult == null) {
     echo(json_encode(["status" => "No events found"]));
