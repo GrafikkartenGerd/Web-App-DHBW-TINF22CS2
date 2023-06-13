@@ -36,7 +36,7 @@ $userController = new UserController();
 
 $eventHost = $userController->getUserById($event["host"]);
 if($eventHost == null)
-  $eventHost = ["username" => "Unknown", "profile_picture" => DEFAULT_PROFILE_PICTURE, "id" => $hostId];
+  $eventHost = ["username" => "Unknown", "profile_picture" => DEFAULT_PROFILE_PICTURE, "id" => $event["host"]];
 
 if($participantIds != null){
   foreach ($participantIds as $uid){
