@@ -300,7 +300,7 @@ if($action !== null){
       </div>
     </form>
     <div class="forgot-password">
-      Forgot Password? Write an Email to: admin@campusconnect.de
+      <div class="text-center email-link">Forgot Password? <a href="mailto:support@campusconnect.de">Send an Email</a></div>
     </div>
   </div>
 </div>

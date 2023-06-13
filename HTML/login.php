@@ -114,7 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"]) && isset(
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
-                <p class="text-center register-link">Don't have an account? <a href="register.php">Register</a></p>
+                <div><p class="text-center register-link">Don't have an account? <a href="register.php">Register</a>
+                    <div class="text-center email-link">Forgot Password? <a href="mailto:support@campusconnect.de">Send an Email</a></div></p>
+                </div>
             </form>
         </div>
     </main>
