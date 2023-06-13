@@ -4,8 +4,10 @@ var mc = new Hammer(eventCard);
 var initialX = null;
 var isSwiping = false;
 
-function changeEventStatus(accept){
-    $.post('event.php?id=' + window.event.id, { accept: accept }, function(response) {
+async function changeEventStatus(accept){
+  
+    await $.post('event.php?id=' + window.event.id, { accept: accept }, function (response)
+    {
       });
 }
 
@@ -22,7 +24,7 @@ mc.on('panmove', function (e)
     eventCard.style.transform = 'translateX(' + deltaX + 'px)';
 });
 
-mc.on('panend', function (e)
+mc.on('panend', async function (e)
 {
     if (!isSwiping) return;
     isSwiping = false;
@@ -35,13 +37,13 @@ mc.on('panend', function (e)
     {
         eventCard.classList.add('swipe-left');
         explodeCard();
-        changeEventStatus(false);
+        await changeEventStatus(false);
     } else if (deltaX > threshold)
     {
         eventCard.classList.add('swipe-right');
         showConfirmation();
         eventCard.style.display = "none";
-        changeEventStatus(true);
+        await changeEventStatus(true);
     }
 
     fetchNextEvent();
@@ -66,7 +68,7 @@ function showConfirmation()
         .addClass('confirmation-popup')
         .appendTo('body');
 
-    // this will make the background darker temporarly
+    // this will make the background darker temporarily
     var overlay = $('<div></div>')
         .addClass('overlay')
         .appendTo('body');

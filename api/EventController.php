@@ -61,13 +61,12 @@ class EventController extends BaseController
 
     private function getFilterSuffix($user, $filter_level){
         switch($filter_level){
+            case "next":
             case "upcoming":
                 return " WHERE date > NOW() ORDER BY date ASC";
             case "today":
                 $today = date('Y-m-d');
                 return " WHERE DATE_FORMAT(date_column, '%Y-%m-%d') = '$today' ORDER BY date ASC";
-            case "next":
-                return " WHERE date > NOW() ORDER BY date ASC LIMIT 1";
             case "past":
                 return " WHERE date < NOW() ORDER BY date DESC LIMIT 100";
                 break;
@@ -76,26 +75,32 @@ class EventController extends BaseController
             case "joined":
                 return " WHERE accepted LIKE '%,".$user["id"].",%' OR accepted LIKE '%,".$user["id"]."' ORDER BY date ASC";
             default:
-                return "";
-                break;
+                return null;
         }
     }
 
-    public function getEventsFiltered($user, $filter_level, $limit = true)
+    public function getEventsFiltered($user, $filter_level)
     {
-        $limitCmd = $limit ? " LIMIT 100" : "";
-        if($filter_level != "all"){
-            $filterParam = $user[$filter_level];
-            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events FROM events WHERE ".$filter_level."=? ORDER BY date ASC".$limitCmd, "s", [$filterParam]);
-        }else{
-            $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events ORDER BY date ASC".$limitCmd, "", []);
-        }
+        $suffix = $this->getFilterSuffix($user, $filter_level);
+        if($suffix == null) return null;
+
+        $events = $this->db->select("SELECT id, name, date, place, host, content, faculty, degree, course, stuv, accepted, declined FROM events ".$suffix, "", []);
         
         if($events == false)
             return null;
 
         $events = $events->fetch_all(MYSQLI_ASSOC);
         
+        
+        if($filter_level == "next"){
+            foreach($events as $event){
+                if($this->userEventAcceptanceStatus($event, $user["id"]) == 0)
+                    return array($event);
+            }
+
+            return array();
+        }
+
         return $events;
     }
 
