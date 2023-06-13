@@ -66,14 +66,13 @@ class EventController extends BaseController
                 return " WHERE date > NOW() ORDER BY date ASC";
             case "today":
                 $today = date('Y-m-d');
-                return " WHERE DATE_FORMAT(date_column, '%Y-%m-%d') = '$today' ORDER BY date ASC";
+                return " WHERE DATE_FORMAT(date, '%Y-%m-%d') = '$today' ORDER BY date ASC";
             case "past":
                 return " WHERE date < NOW() ORDER BY date DESC LIMIT 100";
                 break;
             case "declined":
-                return " WHERE declined LIKE '%,".$user["id"].",%' OR declined LIKE '%,".$user["id"]."' ORDER BY date ASC";
             case "joined":
-                return " WHERE accepted LIKE '%,".$user["id"].",%' OR accepted LIKE '%,".$user["id"]."' ORDER BY date ASC";
+                return " ORDER BY date ASC";
             default:
                 return null;
         }
@@ -99,6 +98,21 @@ class EventController extends BaseController
             }
 
             return array();
+        }
+
+        if($filter_level == "declined" || $filter_level == "joined"){
+            $filteredEvents = [];
+            foreach($events as $event){
+                $accStatus = $this->userEventAcceptanceStatus($event, $user["id"]);
+
+                // check if the acceptance status matched the filter level
+                if((($filter_level == "declined" && $accStatus == 2) || 
+                ($filter_level == "joined" && $accStatus == 1))
+                && $event["host"] != $user["id"])   // exclude own events
+                    $filteredEvents[] = $event;
+            }
+
+            return $filteredEvents;
         }
 
         return $events;

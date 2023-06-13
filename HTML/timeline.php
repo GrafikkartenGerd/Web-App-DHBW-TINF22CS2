@@ -1,6 +1,30 @@
 <?php
 
-include "auth.php"
+include "auth.php";
+
+$scope = $_GET['scope'] ?? null;
+if($scope == null) $scope = "upcoming";
+
+require_once "../api/EventController.php";
+require_once "../api/UserController.php";
+
+$controller = new EventController();
+$events = $controller->getEventsFiltered($_SESSION["user"], $scope);
+
+if($events === null)
+  $errorMessage = "Internal server error.";
+
+$userController = new UserController();
+
+foreach ($events as &$event) {
+  $hostId = $event['host']; // Assuming 'host' is the key for the host ID in the event array
+  $user = $userController->getUserById($hostId, true);    // get minimal info to prevent data leaks
+  if($user == null)
+      $event["host"] = ["username" => "Unknown", "profile_picture" => DEFAULT_PROFILE_PICTURE, "id" => $hostId];
+  else
+      $event['host'] = $user;
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -75,6 +99,12 @@ include "auth.php"
 ?>
 <main>
 <div class="container mt-4">
+  <div id="alertContainer">
+                    <?php
+                        if(isset($errorMessage))
+                            echo '<div role="alert" class="alert alert-danger">'.$errorMessage.'</div>';
+                    ?>
+                </div>
   <div class="row event-timeline">
     <div class="col">
       <h3>Event Timeline</h3>
@@ -86,81 +116,58 @@ include "auth.php"
           <li><a class="dropdown-item" href="#" onclick="changeScope('upcoming')">Upcoming</a></li>
           <li><a class="dropdown-item" href="#" onclick="changeScope('today')">Today</a></li>
           <li><a class="dropdown-item" href="#" onclick="changeScope('past')">Past</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeScope('liked')">Liked</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeScope('disliked')">Disliked</a></li>
+          <li><a class="dropdown-item" href="#" onclick="changeScope('joined')">Joined</a></li>
+          <li><a class="dropdown-item" href="#" onclick="changeScope('declined')">Declined</a></li>
         </ul>
       </div>
-      <div id="eventTimeline"></div>
+      <div id="eventTimeline">
+           <?php foreach ($events as $event): $eventHost = $userController->getUserById($event["id"]);?>
+            <?php  ?>
+            <div class="card">
+              <div class="card-body">
+                  <a href="event.php?id=<?php echo $event["id"]?>"><h5 class="card-title"><?php echo $event["name"]?></h5></a>
+                  <p class="card-text"><?php echo $event["content"]?></p>
+                   <div class="d-flex align-items-center">
+                        <img src="<?php echo $event["host"]["profile_picture"]?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
+                        <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $event["host"]["id"]?>"><?php echo $event["host"]["username"]?></a>
+                      </div>
+                  <div class="d-flex align-items-center mt-2">
+                    <i class="far fa-calendar-alt"></i>
+                    <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["date"]?></p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["place"]?></p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-user"></i>
+                    <p class="mb-0 ml-2" style="margin-left:7px">Participants: <?php echo count($controller->getParticipants($event))-1?></p>
+                  </div>
+                    <button class="btn btn-primary" onclick="copyEventUrl(this, <?php echo $event['id']; ?>);" style="margin-top:10px">
+                      <i class="fas fa-share"></i> Share
+                    </button>
+              </div>
+        </div>
+        <?php endforeach; ?>
+
+      </div>
     </div>
   </div>
 </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  function displayEvents(events) {
-    var eventTimeline = document.getElementById('eventTimeline');
-    eventTimeline.innerHTML = '';
 
-    events.forEach(function(event) {
-      var eventBox = document.createElement('div');
-      eventBox.className = 'event-box';
-      eventBox.innerHTML = `
-        <img src="${event.image}" alt="Event Image">
-        <div class="event-info">
-          <div class="event-name">${event.name}</div>
-          <div class="event-caption">${event.caption}</div>
-          <div class="event-date">Date: ${event.date}</div>
-          <div class="event-place">Place: ${event.place}</div>
-          <div class="event-share">
-            <button class="btn btn-primary" onclick="shareEvent('${event.name}', '${event.caption}')">
-              <i class="fas fa-share"></i> Share
-            </button>
-          </div>
-        </div>
-      `;
-
-      eventTimeline.appendChild(eventBox);
-    });
+ function copyEventUrl(sender, id){
+    sender.className = "btn btn-success";
+    var fa = sender.querySelector("i");
+    fa.className = "fas fa-check";
+    sender.innerHTML = fa.outerHTML + " Copied URL to clipboard";
+    var relativeUrl = "event.php?id=" + id;
+    var absoluteUrl = new URL(relativeUrl, window.location.href).href;
+    navigator.clipboard.writeText(absoluteUrl);
   }
 
-  function changeScope(scope) {
-    var filteredEvents = [];
-
-    switch (scope) {
-      case 'upcoming':
-        filteredEvents = exampleEvents.filter(function(event) {
-          var eventDate = new Date(event.date);
-          var currentDate = new Date();
-          return eventDate > currentDate;
-        });
-        break;
-      case 'today':
-        filteredEvents = exampleEvents.filter(function(event) {
-          var eventDate = new Date(event.date);
-          var currentDate = new Date();
-          return eventDate.toDateString() === currentDate.toDateString();
-        });
-        break;
-      case 'past':
-        filteredEvents = exampleEvents.filter(function(event) {
-          var eventDate = new Date(event.date);
-          var currentDate = new Date();
-          return eventDate < currentDate;
-        });
-        break;
-      case 'liked':
-        // Placeholder for liked events filtering
-        break;
-      case 'disliked':
-        // Placeholder for disliked events filtering
-        break;
-      default:
-        filteredEvents = exampleEvents;
-    }
-
-    displayEvents(filteredEvents);
-  }
-  changeScope('upcoming');
 </script>
 <?php
   include("../api/footer.php")
