@@ -18,8 +18,11 @@ if($action !== null){
     $surname = $_POST['surname'] ?? null;
     $bio = $_POST['bio'] ?? null;
 
-    if($name != null && $surname != null && $bio != null){
+    if($name != null && $surname != null)
+    {
+      if($bio == null || empty($bio) ) $bio = ""; // empty bio possible
       $controller->updateProfileInfo($_SESSION["user"]["id"], $name, $surname, $bio);
+      header("Location: user.php");
     }else{
       $errorMessage = "Missing parameters.";
     }
@@ -62,8 +65,6 @@ if($action !== null){
   $auth = new AuthController();
   $_SESSION["user"] = $auth->refreshUser($_SESSION["user"]["username"]);
 }
-  
-
 ?>
 
 <!DOCTYPE html>
@@ -195,11 +196,12 @@ if($action !== null){
       }
 
       .password-change-window-close2 {
+        overflow: hidden;
+        position: relative;
         text-decoration: underline;
         font-size:20px;
         position: relative;
         top: 80%;
-        right: 90%;
         cursor: pointer;
         color: black;
       }
@@ -280,7 +282,7 @@ if($action !== null){
   <div class="password-change-window">
   <div class="password-change-window-inner">
     <div class="password-change-window-close" onclick="closePasswordChangeWindow()">X</div>
-    <div class="password-change-window-close2" onclick="closePasswordChangeWindow()">close</div>
+    <div class="password-change-window-close2" onclick="closePasswordChangeWindow()">Close</div>
     <h2>Change Password</h2>
     <form action="profile.php?do=pass" method="POST">
       <div class="mb-3">
