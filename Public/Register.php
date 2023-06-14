@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $birthday = $_POST['birthday'] ?? null;
 
     if ($username !== null && $name !== null && $surname !== null && $password !== null && $confirmPassword !== null && $matricNum !== null && $course !== null && $gender !== null
-        && $birthday !== null && !empty($birthday)) {
+        && $birthday !== null && !empty($birthday) && !empty($username) && !empty($name) && !empty($surname)) {
 
         $isValid = true;
 
@@ -65,7 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errorMessage = "Passwords do not match.";
         }
 
-        $gender = $gender == "Male" ? "m" : "f";
+        $matricNum = filter_var($matricNum, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 9223372036854775807]]);
+        if($matricNum === false){
+            $isValid = false;
+            $errorMessage = "Invalid matriculation number.";
+        }
+
+        $gender = $gender == "Male" ? "m" : ($gender == "Female" ? "f" : "o");
 
         if ($isValid) {
 
