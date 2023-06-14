@@ -17,7 +17,7 @@ if ($action === 'searchEvent') {
   if($result == null)
       echo json_encode(['success' => false]);
   else
-      echo json_encode(['success' => true, 'events' => $result]);
+      echo json_encode(['success' => true, 'events' => $result], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 
   exit;
 }
@@ -32,7 +32,7 @@ if ($action === 'searchUsers') {
     if($result == null)
         echo json_encode(['success' => false]);
     else
-        echo json_encode(['success' => true, 'users' => $result]);
+        echo json_encode(['success' => true, 'users' => $result], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 
     exit;
 }
@@ -116,7 +116,7 @@ if ($action === 'getEventList') {
     if($events === null)
         echo json_encode(['status' => false]);
     else
-        echo json_encode(['status' => true, 'events' => $events]);
+        echo json_encode(['status' => true, 'events' => $events], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 
     exit;
 }

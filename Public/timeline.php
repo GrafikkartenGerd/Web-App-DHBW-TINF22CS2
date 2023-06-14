@@ -133,19 +133,19 @@ foreach ($events as &$event) {
             <?php  ?>
             <div class="card">
               <div class="card-body">
-                  <a href="event.php?id=<?php echo $event["id"]?>"><h5 class="card-title"><?php echo $event["name"]?></h5></a>
-                  <p class="card-text"><?php echo $event["content"]?></p>
+                  <a href="event.php?id=<?php echo $event["id"]?>"><h5 class="card-title"><?php echo htmlspecialchars($event["name"], ENT_QUOTES, 'UTF-8');?></h5></a>
+                  <p class="card-text"><?php echo htmlspecialchars($event["content"], ENT_QUOTES, 'UTF-8')?></p>
                    <div class="d-flex align-items-center">
-                        <img src="<?php echo $event["host"]["profile_picture"]?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
-                        <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $event["host"]["id"]?>"><?php echo $event["host"]["username"]?></a>
+                        <img src="<?php echo htmlspecialchars($event["host"]["profile_picture"], ENT_QUOTES, 'UTF-8');?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
+                        <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $event["host"]["id"]?>"><?php echo htmlspecialchars($event["host"]["username"], ENT_QUOTES, 'UTF-8');?></a>
                       </div>
                   <div class="d-flex align-items-center mt-2">
                     <i class="far fa-calendar-alt"></i>
-                    <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["date"]?></p>
+                    <p class="mb-0 ml-2" style="margin-left:7px"><?php echo htmlspecialchars($event["date"], ENT_QUOTES, 'UTF-8');?></p>
                   </div>
                   <div class="d-flex align-items-center">
                     <i class="fas fa-map-marker-alt"></i>
-                    <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["place"]?></p>
+                    <p class="mb-0 ml-2" style="margin-left:7px"><?php echo htmlspecialchars($event["place"], ENT_QUOTES, 'UTF-8')?></p>
                   </div>
                   <div class="d-flex align-items-center">
                     <i class="fas fa-user"></i>

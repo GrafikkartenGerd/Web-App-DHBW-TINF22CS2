@@ -36,5 +36,5 @@ foreach ($events as &$event) {
         $event["participant_count"] = count($eventController->getParticipants($event)) - 1;
       }
 
-echo json_encode(['success' => true, 'events' => $events]);
+echo json_encode(['success' => true, 'events' => $events], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 ?>

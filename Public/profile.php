@@ -244,27 +244,27 @@ if($action !== null){
             <form method="POST" action="profile.php?do=profile">
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" readonly value="<?php echo $_SESSION["user"]["username"]?>">
+              <input type="text" class="form-control" id="username" readonly value="<?php echo htmlspecialchars($_SESSION["user"]["username"], ENT_QUOTES, 'UTF-8')?>">
             </div>
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" name="name" value="<?php echo $_SESSION["user"]["name"]?>">
+              <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($_SESSION["user"]["name"],ENT_QUOTES, 'UTF-8');?>">
             </div>
             <div class="mb-3">
               <label for="surname" class="form-label">Surname</label>
-              <input type="text" class="form-control" id="surname" name="surname" value="<?php echo $_SESSION["user"]["surname"]?>">
+              <input type="text" class="form-control" id="surname" name="surname" value="<?php echo htmlspecialchars($_SESSION["user"]["surname"], ENT_QUOTES, 'UTF-8');?>">
             </div>
             <div class="mb-3">
               <label for="bio" class="form-label">Bio</label>
-              <input type="bio" class="form-control" id="bio" name="bio" value="<?php echo $_SESSION["user"]["bio"]?>">
+              <input type="bio" class="form-control" id="bio" name="bio" value="<?php echo htmlspecialchars($_SESSION["user"]["bio"], ENT_QUOTES, 'UTF-8');?>">
             </div>
             <div class="mb-3">
               <label for="birthday" class="form-label">Birthday</label>
-              <input type="date" class="form-control" id="birthday" value="<?php echo $_SESSION["user"]["birthday"]?>" readonly>
+              <input type="date" class="form-control" id="birthday" value="<?php echo htmlspecialchars($_SESSION["user"]["birthday"], ENT_QUOTES, 'UTF-8')?>" readonly>
             </div>
             <div class="mb-3">
               <label for="course" class="form-label">Course</label>
-              <input type="text" class="form-control" id="course" value="<?php echo $_SESSION["user"]["course"]?>" readonly>
+              <input type="text" class="form-control" id="course" value="<?php echo htmlspecialchars($_SESSION["user"]["course"], ENT_QUOTES, 'UTF-8');?>" readonly>
             </div>
             <div class="password-change-button">
               <button class="btn btn-primary" onclick="return openPasswordChangeWindow()">Change Password</button>

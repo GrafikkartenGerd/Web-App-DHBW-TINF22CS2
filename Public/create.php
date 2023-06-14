@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $eventDate !== null && !empty($eventDate) &&
       $eventPlace !== null && !empty($eventPlace) &&
       $eventContent !== null && !empty($eventContent)) {
+    
       
       // Validate event date
       $dateTime = DateTime::createFromFormat('Y-m-d\TH:i', $eventDate);

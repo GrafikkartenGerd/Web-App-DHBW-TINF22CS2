@@ -77,7 +77,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo isset($event) ? $event['name'] : 'Event'; ?></title>
+  <title><?php echo isset($event) ? htmlspecialchars($event['name'],ENT_QUOTES, 'UTF-8') : 'Event'; ?></title>
   <!-- Include Bootstrap CSS and any other necessary CSS files -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -139,24 +139,24 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
     <div class="row">
       <div class="col">
         <?php if (isset($event)): ?>
-          <h3><?php echo $event['name']; ?></h3>
-          <div class="event-caption"><?php echo $event['content']; ?></div>
+          <h3><?php echo htmlspecialchars($event['name'], ENT_QUOTES, 'UTF-8'); ?></h3>
+          <div class="event-caption"><?php echo htmlspecialchars($event['content'], ENT_QUOTES, 'UTF-8'); ?></div>
       
           <div class="d-flex align-items-center">
-        <img src="<?php echo $eventHost["profile_picture"]?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
-        <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $eventHost["id"]?>"><?php echo $eventHost["username"]?></a>
+        <img src="<?php echo htmlspecialchars($eventHost["profile_picture"],ENT_QUOTES, 'UTF-8'); ?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
+        <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo htmlspecialchars($eventHost["id"],ENT_QUOTES, 'UTF-8');?>"><?php echo htmlspecialchars($eventHost["username"], ENT_QUOTES, 'UTF-8')?></a>
       </div>
           <div class="d-flex align-items-center mt-2">
         <i class="far fa-calendar-alt"></i>
-        <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event["date"]?></p>
+        <p class="mb-0 ml-2" style="margin-left:7px"><?php echo htmlspecialchars($event["date"], ENT_QUOTES, 'UTF-8')?></p>
       </div>
           <div class="d-flex align-items-center">
             <i class="fas fa-map-marker-alt"></i>
-            <p class="mb-0 ml-2" style="margin-left:7px"><?php echo $event['place']; ?></p>
+            <p class="mb-0 ml-2" style="margin-left:7px"><?php echo htmlspecialchars($event['place'],ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
           <?php
             if($_SESSION["user"]["id"] == $event["host"]){
-              echo '<button class="btn btn-danger" type="button" style="margin-top:10px" onclick="deleteEvent('.$event["id"].')">Delete Event</button>';
+              echo '<button class="btn btn-danger" type="button" style="margin-top:10px" onclick="deleteEvent('.htmlspecialchars($event["id"],ENT_QUOTES, 'UTF-8').')">Delete Event</button>';
             }
           ?>
         <?php if ($event["host"] != $_SESSION["user"]["id"]): ?>
@@ -178,8 +178,8 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
         <ul class="participant-list">
           <?php foreach ($participants as $participant): ?>
             <div class="d-flex align-items-center">
-              <img src="<?php echo $participant["profile_picture"]?>" alt="Profile Picture" class="rounded-circle" style="width: 20px;">
-              <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $participant["id"]?>"><?php echo $participant["username"]?></a>
+              <img src="<?php echo htmlspecialchars($participant["profile_picture"], ENT_QUOTES, 'UTF-8');?>" alt="Profile Picture" class="rounded-circle" style="width: 20px;">
+              <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo htmlspecialchars($participant["id"], ENT_QUOTES, 'UTF-8');?>"><?php echo htmlspecialchars($participant["username"]);?></a>
             </div>
           <?php endforeach; ?>
         </ul>
