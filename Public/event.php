@@ -108,6 +108,11 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
   
     .event-caption {
         margin-bottom: 10px;
+        overflow-wrap: anywhere;
+      word-wrap: break-word;
+      word-break: normal;
+      hyphens: auto;
+      white-space: pre-wrap;
     }
   
     .event-date {

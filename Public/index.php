@@ -20,6 +20,14 @@ include "auth.php"
     .card {
       margin-bottom: 20px;
     }
+
+    .card-text {
+      overflow-wrap: anywhere;
+      word-wrap: break-word;
+      word-break: normal;
+      hyphens: auto;
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 <body>

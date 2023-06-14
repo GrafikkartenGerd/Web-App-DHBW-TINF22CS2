@@ -90,6 +90,14 @@ foreach ($events as &$event) {
       margin-bottom: 20px;
     }
 
+    .card-text {
+      overflow-wrap: anywhere;
+      word-wrap: break-word;
+      word-break: normal;
+      hyphens: auto;
+      white-space: pre-wrap;
+    }
+
     </style>
 </head>
 <body>
@@ -113,11 +121,11 @@ foreach ($events as &$event) {
           Select Scope
         </button>
         <ul class="dropdown-menu" aria-labelledby="scopeDropdown">
-          <li><a class="dropdown-item" href="#" onclick="changeScope('upcoming')">Upcoming</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeScope('today')">Today</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeScope('past')">Past</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeScope('joined')">Joined</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeScope('declined')">Declined</a></li>
+        <li><button type="button" class="dropdown-item" href="#" onclick="changeScope('upcoming')">Upcoming</button></li>
+          <li><button type="button" class="dropdown-item" href="#" onclick="changeScope('today')">Today</button></li>
+          <li><button type="button" class="dropdown-item" href="#" onclick="changeScope('past')">Past</button></li>
+          <li><button type="button" class="dropdown-item" href="#" onclick="changeScope('joined')">Joined</button></li>
+          <li><button type="button" class="dropdown-item" href="#" onclick="changeScope('declined')">Declined</button></li>
         </ul>
       </div>
       <div id="eventTimeline">
@@ -143,7 +151,7 @@ foreach ($events as &$event) {
                     <i class="fas fa-user"></i>
                     <p class="mb-0 ml-2" style="margin-left:7px">Participants: <?php echo count($controller->getParticipants($event))-1?></p>
                   </div>
-                    <button class="btn btn-primary" onclick="copyEventUrl(this, <?php echo $event['id']; ?>);" style="margin-top:10px">
+                    <button class="btn btn-primary" type="button" onclick="copyEventUrl(this, <?php echo $event['id']; ?>);" style="margin-top:10px">
                       <i class="fas fa-share"></i> Share
                     </button>
               </div>
@@ -166,6 +174,10 @@ foreach ($events as &$event) {
     var relativeUrl = "event.php?id=" + id;
     var absoluteUrl = new URL(relativeUrl, window.location.href).href;
     navigator.clipboard.writeText(absoluteUrl);
+  }
+
+  function changeScope(scope){
+    window.location.href = "timeline.php?scope=" + scope;
   }
 
 </script>
