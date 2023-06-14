@@ -21,7 +21,7 @@
  .profile-picture {
      width: 250px;
      height: 250px;
-     padding: 12px;
+     margin-left: 10px;
      object-fit: cover;
  }
 

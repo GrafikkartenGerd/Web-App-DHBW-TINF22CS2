@@ -143,7 +143,7 @@ $participationStatus = $controller->userEventAcceptanceStatus($event, $_SESSION[
           <div class="event-caption"><?php echo htmlspecialchars($event['content'], ENT_QUOTES, 'UTF-8'); ?></div>
       
           <div class="d-flex align-items-center">
-        <img src="<?php echo htmlspecialchars($eventHost["profile_picture"],ENT_QUOTES, 'UTF-8'); ?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
+        <img src="<?php echo htmlspecialchars($eventHost["profile_picture"],ENT_QUOTES, 'UTF-8'); ?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px; height:20px; object-fit:cover">
         <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo htmlspecialchars($eventHost["id"],ENT_QUOTES, 'UTF-8');?>"><?php echo htmlspecialchars($eventHost["username"], ENT_QUOTES, 'UTF-8')?></a>
       </div>
           <div class="d-flex align-items-center mt-2">

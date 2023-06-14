@@ -136,7 +136,7 @@ foreach ($events as &$event) {
                   <a href="event.php?id=<?php echo $_event["id"]?>"><h5 class="card-title"><?php echo htmlspecialchars($_event["name"], ENT_QUOTES, 'UTF-8');?></h5></a>
                   <p class="card-text"><?php echo htmlspecialchars($_event["content"], ENT_QUOTES, 'UTF-8')?></p>
                    <div class="d-flex align-items-center">
-                        <img src="<?php echo htmlspecialchars($_event["host"]["profile_picture"], ENT_QUOTES, 'UTF-8');?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px;">
+                        <img src="<?php echo htmlspecialchars($_event["host"]["profile_picture"], ENT_QUOTES, 'UTF-8');?>" alt="User Profile Picture" class="rounded-circle" style="width: 20px; height:20px; object-fit:cover">
                         <a class="mb-0 ml-2" style="margin-left:7px" href="user.php?id=<?php echo $_event["host"]["id"]?>"><?php echo htmlspecialchars($_event["host"]["username"], ENT_QUOTES, 'UTF-8');?></a>
                       </div>
                   <div class="d-flex align-items-center mt-2">
