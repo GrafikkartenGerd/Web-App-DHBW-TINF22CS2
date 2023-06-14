@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </main>
     <?php
-        include("../Private/footer.php");
+        include("../private/footer.php");
     ?>
 </body>
 </html>
