@@ -6,11 +6,13 @@ $controller = new EventController();
 
 if(!isset($_GET["id"]))
   $controller->fail(404);
-
+  
 $event = $controller->getEventById($_GET["id"]);
 
-if($event == null)
-  $controller->fail(404);
+if($event == null){
+  header("Location: index.php");
+  exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -38,8 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
           if($success == false)
             echo(json_encode(["status" => false, "reason" => "Internal server error."]));
-          else
-            echo(json_encode(["status" => true]));          
+          else{
+            echo(json_encode(["status" => true]));
+          }         
         }else{
           echo(json_encode(["status" => false, "reason" => "User does not match host."]));
         }
