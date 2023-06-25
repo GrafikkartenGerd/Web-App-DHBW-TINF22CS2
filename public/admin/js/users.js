@@ -1,5 +1,5 @@
  // Function to populate the user table
- function populateUserTable(users) {
+function populateUserTable(users, isSuperAdmin) {
     var userTableBody = $('#userTableBody');
     userTableBody.empty();
 
@@ -13,30 +13,66 @@
       var courseCell = $('<td>').text(user.course);
       var actionsCell = $('<td>');
 
-      // delete user
-      var deleteBtn = $('<button>')
-        .addClass('btn btn-danger')
-        .text('Delete')
-        .click(function() {
-          deleteUser(user.username);
-        });
+      if (user.is_super_admin != 1) // super admin accounts should remain untouched
+      {
+        // delete user button
+        var deleteBtn = $('<button>')
+          .addClass('btn btn-danger')
+          .text('Delete')
+          .click(function ()
+          {
+            deleteUser(user.username);
+          });
+        
+        actionsCell.append(deleteBtn);
 
-      // reset password btn
-      var resetPasswordBtn = $('<button>')
-        .addClass('btn btn-warning')
-        .text('Reset Password')
-        .click(function() {
-          resetPassword(user.username);
-        });
+        // reset password btn
+        var resetPasswordBtn = $('<button>')
+          .addClass('btn btn-warning')
+          .text('Reset Password')
+          .click(function ()
+          {
+            resetPassword(user.username);
+          });
 
         var exportUserBtn = $('<button>')
-        .addClass('btn btn-info')
-        .text('Export')
-        .click(function() {
-          exportUser(user.username);
-        });
+          .addClass('btn btn-info')
+          .text('Export')
+          .click(function ()
+          {
+            exportUser(user.username);
+          });
 
-      actionsCell.append(deleteBtn, resetPasswordBtn, exportUserBtn);
+
+        actionsCell.append(resetPasswordBtn, exportUserBtn);
+
+        if (isSuperAdmin)
+        {
+          var userLevelButton;
+          if (user.is_admin)
+          {
+            userLevelButton = $('<button>')
+              .addClass('btn btn-danger')
+              .text('Remove Admin')
+              .click(function ()
+              {
+                changeUserLevel(user.username, 0);
+              });
+          } else
+          {
+            userLevelButton = $('<button>')
+              .addClass('btn btn-danger')
+              .text('Make Admin')
+              .click(function ()
+              {
+                changeUserLevel(user.username, 1);
+              });
+          }
+
+          actionsCell.append(userLevelButton);
+        }
+      }
+
       row.append(usernameCell, nameCell, courseCell, actionsCell);
       userTableBody.append(row);
     });
@@ -51,10 +87,26 @@
       // Check if the request was successful
       if (response.success) {
         var users = response.users;
-        populateUserTable(users); // Populate the user table with the search results
+        populateUserTable(users, response.is_self_super_admin); // Populate the user table with the search results
       } else {
         if(!quiet)
           showAlert("Couldn't find user!", "danger");
+      }
+    });
+  }
+
+  // Function to change user permission level
+function changeUserLevel(username, promote)
+  {
+    $.get('backend.php', { action: 'userPerms', username: username, promote: promote}, function (response)
+    {
+      if (response.success)
+      {
+        showAlert("Changed user permissions successfully!", "success");
+        searchUsers(true);
+      } else
+      {
+        showAlert("Change user permissions!", "danger");
       }
     });
   }

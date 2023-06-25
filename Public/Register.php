@@ -17,6 +17,7 @@ if($cookie_login){
 
     $_SESSION["logged_in"] = true;
     $_SESSION["is_admin"] = $result["is_admin"] == 1;
+    $_SESSION["is_super_admin"] = $result["is_super_admin"] == 1;
     $_SESSION["user"] = $result;
 
     header('Location: index.php');

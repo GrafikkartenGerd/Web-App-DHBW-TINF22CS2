@@ -1,5 +1,12 @@
 <?php
 
+function failWithCode($code)
+{
+    http_response_code($code);
+    exit();
+    return null;
+}
+
 require "auth.php";
 require_once("../../private/UserController.php");
 require_once("../../private/EventController.php");
@@ -32,8 +39,7 @@ if ($action === 'searchUsers') {
     if($result == null)
         echo json_encode(['success' => false]);
     else
-        echo json_encode(['success' => true, 'users' => $result], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
-
+        echo(json_encode(['success' => true, 'users' => $result, 'is_self_super_admin' => $_SESSION["is_super_admin"]], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP));
     exit;
 }
 
@@ -43,8 +49,14 @@ if ($action === 'deleteUser') {
   if(!isset($username)) failWithCode(405);
   $controller = new UserController();
   $user = $controller->getUserByUsername($username);
+
   if($user == null){
     echo json_encode(['success' => false, 'reason' => "User not found!"]);
+    exit;
+  }
+
+  if($user["is_super_admin"] == 1){
+    echo json_encode(['success' => false, 'reason' => "Unable to delete super admin!"]);
     exit;
   }
 
@@ -87,13 +99,43 @@ if ($action === 'resetPassword') {
 
   $controller = new UserController();
   $user = $controller->getUserByUsername($username);
+
   if($user == null){
     echo json_encode(['success' => false, 'reason' => "User not found!"]);
     exit;
   }
 
+  if($user["is_super_admin"] == 1){
+    echo json_encode(['success' => false, 'reason' => "Unable to change super admin password!"]);
+    exit;
+  }
+
   $result = $controller->setUserPassword($user["id"], $newPassword);
   echo json_encode(['success' => $result, 'password' => $newPassword]);
+  
+  exit;
+}
+
+// Handle the promote/demote user
+if ($action === 'userPerms') {
+  $username = $_GET['username'];
+  $promote = $_GET['promote'];
+
+  $controller = new UserController();
+  $user = $controller->getUserByUsername($username);
+
+  if($user == null){
+    echo json_encode(['success' => false, 'reason' => "User not found!"]);
+    exit;
+  }
+
+  if($user["is_super_admin"] == 1){
+    echo json_encode(['success' => false, 'reason' => "Unable to change super admin permissions!"]);
+    exit;
+  }
+
+  $result = $controller->changeUserLevel($user["id"], $promote);
+  echo json_encode(['success' => $result]);
   
   exit;
 }

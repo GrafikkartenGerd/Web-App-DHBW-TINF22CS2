@@ -15,6 +15,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true && isset($_S
     }
 
     $_SESSION["is_admin"] = $result["is_admin"] == 1;
+    $_SESSION["is_super_admin"] = $result["is_super_admin"] == 1;
     $_SESSION["user"] = $result;
 
     return $_SESSION["user"];

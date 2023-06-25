@@ -20,13 +20,18 @@ class UserController extends BaseController
     public function searchUsers($query){
 
         $query = '%'.$query.'%';
-        $result = $this->db->select("SELECT id, username, name, surname, course FROM users WHERE username LIKE ? OR name LIKE ? OR surname LIKE ? or course LIKE ?;", "ssss", [$query, $query, $query, $query]);
+        $result = $this->db->select("SELECT id, username, name, surname, course, is_super_admin, is_admin FROM users WHERE username LIKE ? OR name LIKE ? OR surname LIKE ? or course LIKE ?;", "ssss", [$query, $query, $query, $query]);
 
         if($result == false)
             return null;
             
         $result = $result->fetch_all(MYSQLI_ASSOC);
 
+        return $result;
+    }
+    
+    public function changeUserLevel($userId, $admin){
+        $result = $this->db->exec("UPDATE users SET is_admin=? WHERE id=?", "ii", [$admin, $userId]);
         return $result;
     }
 
@@ -74,7 +79,7 @@ class UserController extends BaseController
 
     public function getUserByUsername($username)
     {
-        $result = $this->db->select("SELECT id, username, name, surname, birthday, gender, faculty, degree, course, stuv FROM users WHERE username=?;", "s", [$username]);
+        $result = $this->db->select("SELECT id, username, name, surname, birthday, gender, faculty, degree, course, stuv, is_super_admin FROM users WHERE username=?;", "s", [$username]);
 
         if($result == false)
             return null;
