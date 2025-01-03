@@ -24,8 +24,8 @@ jobs:
       run: |
         mkdir tools
         wget https://getcomposer.org/composer.phar -O tools/composer.phar
-        composer init
-        composer install
+        composer init --name="dummy/project" --description="Temporary composer setup for Psalm" --author="Author <author@example.com>" --require-dev=vimeo/psalm --no-interaction
+        composer install --no-scripts --no-progress --no-suggest
         php tools/composer.phar require --working-dir=tools vimeo/psalm
    
     - name: Initialize Psalm Configuration
