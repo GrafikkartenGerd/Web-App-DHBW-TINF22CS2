@@ -1,36 +1,32 @@
-name: PHP Code Scanning
+name: Psalm Static Analysis
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   pull_request:
-    branches: [main]
+    branches: [ "main" ]
 
 jobs:
-  code_scanning:
-    name: Run PHP Code Scanning
+  psalm-analysis:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 8.2
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring
 
-    - name: Install Static Analysis Tools
-      run: |
-        mkdir tools
-        wget https://getcomposer.org/composer.phar -O tools/composer.phar
-        composer init --name="dummy/project" --description="Temporary composer setup for Psalm" --author="Author <author@example.com>" --require-dev=vimeo/psalm --no-interaction
-        composer install --no-scripts --no-progress --no-suggest
-        php tools/composer.phar require --working-dir=tools vimeo/psalm
-   
-    - name: Initialize Psalm Configuration
-      run: php tools/vendor/bin/psalm --init
+      - name: Download Psalm PHAR
+        run: wget https://github.com/vimeo/psalm/releases/latest/download/psalm.phar
 
-    - name: Run Psalm
-      run: php tools/vendor/bin/psalm --root .
+      # Optional: Initialize a psalm.xml config
+      # (If you haven't created a psalm.xml yet, this will generate one.)
+      - name: Generate psalm.xml
+        run: php psalm.phar --init --src=public --src=private
 
+      - name: Run Psalm
+        run: php psalm.phar --no-cache --show-info=false
