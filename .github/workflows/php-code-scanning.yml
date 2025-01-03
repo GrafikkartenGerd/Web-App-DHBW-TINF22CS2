@@ -29,7 +29,7 @@ jobs:
         php tools/composer.phar require --working-dir=tools vimeo/psalm
    
     - name: Initialize Psalm Configuration
-      run: php tools/vendor/bin/psalm --init private public --level=5
+      run: php tools/vendor/bin/psalm --init
 
     - name: Run Psalm
       run: php tools/vendor/bin/psalm --root .
