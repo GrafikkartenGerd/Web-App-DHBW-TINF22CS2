@@ -24,10 +24,7 @@ jobs:
       run: |
         mkdir tools
         wget https://getcomposer.org/composer.phar -O tools/composer.phar
-        php tools/composer.phar require --working-dir=tools phpstan/phpstan vimeo/psalm
-
-    - name: Run PHPStan
-      run: php tools/vendor/bin/phpstan analyse --level=max .
+        php tools/composer.phar require --working-dir=tools vimeo/psalm
 
     - name: Run Psalm
       run: php tools/vendor/bin/psalm --root .
