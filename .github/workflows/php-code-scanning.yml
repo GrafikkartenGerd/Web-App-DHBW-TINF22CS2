@@ -1,0 +1,34 @@
+name: PHP Code Scanning
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  code_scanning:
+    name: Run PHP Code Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.2
+
+    - name: Install Static Analysis Tools
+      run: |
+        mkdir tools
+        wget https://getcomposer.org/composer.phar -O tools/composer.phar
+        php tools/composer.phar require --working-dir=tools phpstan/phpstan vimeo/psalm
+
+    - name: Run PHPStan
+      run: php tools/vendor/bin/phpstan analyse --level=max .
+
+    - name: Run Psalm
+      run: php tools/vendor/bin/psalm --root .
+
