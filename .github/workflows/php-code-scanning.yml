@@ -26,7 +26,7 @@ jobs:
       # Optional: Initialize a psalm.xml config
       # (If you haven't created a psalm.xml yet, this will generate one.)
       - name: Generate psalm.xml
-        run: php psalm.phar --init . 5
+        run: php psalm.phar --init private 5
 
       - name: Run Psalm
         run: php psalm.phar --no-cache --show-info=false
