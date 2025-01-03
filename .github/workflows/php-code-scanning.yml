@@ -24,6 +24,8 @@ jobs:
       run: |
         mkdir tools
         wget https://getcomposer.org/composer.phar -O tools/composer.phar
+        composer init
+        composer install
         php tools/composer.phar require --working-dir=tools vimeo/psalm
    
     - name: Initialize Psalm Configuration
